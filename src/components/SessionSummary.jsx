@@ -16,12 +16,13 @@ const getPreamble = () => {
  * Builds a self-contained transcript: preamble (prompts Gemini with Jobber context + instructions), then Q&As.
  * User pastes once into Gemini and gets a scorecard back.
  */
-function buildMarkdownTranscript(responses) {
+function buildMarkdownTranscript(responses, sessionMode = 'practice') {
   const now = new Date()
   const preamble = getPreamble()
   const meta = [
     'format: OSmosis Transcript',
     'version: 1',
+    `session_mode: ${sessionMode}`,
     `session_date: ${now.toISOString().slice(0, 19)}Z`,
     `scenario_count: ${responses.length}`,
   ].join('\n')
@@ -62,15 +63,15 @@ function buildMarkdownTranscript(responses) {
   ].join('\n').trimEnd() + '\n'
 }
 
-export default function SessionSummary({ responses, sessionComplete, onBackToStart }) {
+export default function SessionSummary({ responses, sessionComplete, sessionMode = 'practice', onBackToStart }) {
   const [copied, setCopied] = useState(false)
 
-  const md = buildMarkdownTranscript(responses)
+  const md = buildMarkdownTranscript(responses, sessionMode)
 
   useEffect(() => {
     if (responses.length > 0 && sessionComplete) {
       try {
-        const transcript = buildMarkdownTranscript(responses)
+        const transcript = buildMarkdownTranscript(responses, sessionMode)
         const entry = { transcript, date: new Date().toISOString() }
         const raw = localStorage.getItem(LAST_TRANSCRIPT_KEY)
         let list = []
@@ -84,7 +85,7 @@ export default function SessionSummary({ responses, sessionComplete, onBackToSta
         localStorage.setItem(LAST_TRANSCRIPT_KEY, JSON.stringify(list))
       } catch (_) {}
     }
-  }, [responses, sessionComplete])
+  }, [responses, sessionComplete, sessionMode])
 
   const copyTranscript = useCallback(() => {
     navigator.clipboard.writeText(md).then(() => {
@@ -131,6 +132,14 @@ export default function SessionSummary({ responses, sessionComplete, onBackToSta
         >
           {copied ? 'Copied to clipboard' : 'Copy transcript'}
         </motion.button>
+        <a
+          href="https://gemini.google.com/app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 w-full py-2.5 px-6 rounded-xl border border-slate-300 bg-white text-slate-700 font-medium hover:bg-slate-50 transition-colors inline-block text-center"
+        >
+          Open Gemini
+        </a>
         {onBackToStart && (
           <button
             type="button"

@@ -9,7 +9,7 @@ QUICK REFERENCE — Key files
   Prompt used to generate scenarios (Gemini)  →  src/data/scenario-generation-prompt.md
   Filter options (pillar, plan, difficulty, etc.)  →  src/data/scenarioFilters.js
   Scorecard instructions for Gemini           →  src/data/gemini-preamble.md
-  Test mode (fixed questions, time, filters)  →  src/data/testConfig.js
+  Assessment mode (fixed questions, time, filters)  →  src/data/testConfig.js
   Rules for Cursor when editing code          →  .cursorrules
   Session length (Practice mode defaults)     →  src/App.jsx
 
@@ -146,15 +146,15 @@ TWO FILES PEOPLE OFTEN CONFUSE
                            scorecard output—wording, criteria, structure.
 
 
-PRACTICE VS TEST MODE
----------------------
-  On the start screen you can choose Practice or Test.
+PRACTICE VS ASSESSMENT MODE
+---------------------------
+  On the start screen you can choose Practice or Assessment.
   • Practice: You pick how many questions, time per question, and optional
     filters (Topics, Plan, Difficulty, Customer type). Full flexibility.
-  • Test: Fixed session—number of questions, time, and filters come from
+  • Assessment: Fixed session—number of questions, time, and filters come from
     src/data/testConfig.js (e.g. 10 questions, 60 sec each, all topics).
     Change TEST_QUESTION_COUNT, TEST_TIMER_SECONDS, or TEST_FILTERS there
-    to customize the default test.
+    to customize the default assessment.
 
   The "How it works" section at the bottom of the start screen explains
   where scenarios come from, how the transcript and preamble work, how
@@ -167,7 +167,7 @@ BASIC CHANGES YOU MIGHT WANT TO MAKE
 ------------------------------------
   • Add or edit practice scenarios    →  Edit src/data/scenarios.json
   • Change how the scorecard looks    →  Edit src/data/gemini-preamble.md
-  • Change Test mode defaults         →  Edit src/data/testConfig.js
+  • Change Assessment mode defaults   →  Edit src/data/testConfig.js
   • Change number of scenarios (e.g. 5) or timer (e.g. 90 sec) for Practice
     →  Edit src/App.jsx (defaults used when no options passed)
   • Change app title or start-screen text  →  Edit index.html (title),

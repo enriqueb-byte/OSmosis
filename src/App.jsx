@@ -26,6 +26,7 @@ export default function App() {
   const [sessionScenarioCount, setSessionScenarioCount] = useState(DEFAULT_SCENARIO_COUNT)
   const [sessionTimerSeconds, setSessionTimerSeconds] = useState(DEFAULT_TIMER_SECONDS)
   const [sessionResponseMode, setSessionResponseMode] = useState('type')
+  const [sessionMode, setSessionMode] = useState('practice')
 
   const sessionScenarios = useMemo(() => {
     if (phase === 'start') return []
@@ -85,6 +86,7 @@ export default function App() {
     setSessionScenarioCount(options.scenarioCount ?? DEFAULT_SCENARIO_COUNT)
     setSessionTimerSeconds(options.timerSeconds ?? DEFAULT_TIMER_SECONDS)
     setSessionResponseMode(options.responseMode ?? 'type')
+    setSessionMode(options.sessionMode ?? 'practice')
     setPhase('scenarios')
   }, [])
 
@@ -190,6 +192,7 @@ export default function App() {
             key="summary"
             responses={sessionResponses}
             sessionComplete={sessionComplete}
+            sessionMode={sessionMode}
             onBackToStart={() => setPhase('start')}
           />
         )}
