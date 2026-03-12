@@ -377,7 +377,7 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
 
         <div className="flex justify-center -mb-2">
           <img
-            src="/call-gym-logo.png"
+            src={`${import.meta.env.BASE_URL}call-gym-logo.png`}
             alt="The Call Gym"
             className="h-24 w-auto md:h-28 block"
           />
