@@ -1,0 +1,5 @@
+# Project rules for OS-mosis
+
+- Follow existing code style and patterns in the project.
+- Prefer clear, maintainable code with brief comments where helpful.
+- When changing behavior, avoid breaking existing functionality unless intended.

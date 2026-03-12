@@ -1,0 +1,102 @@
+[
+  {
+    "id": "COMM-01",
+    "complexity": 1,
+    "topic": "Communication",
+    "persona": "The Frustrated Traditionalist",
+    "title": "One-Way vs. Two-Way SMS",
+    "query": "Client: 'I'm on Connect. I sent an On-My-Way text, but the customer replied saying the gate is locked and I never saw it. Why is Jobber losing my messages?'",
+    "objective": "Clarify that Connect only handles 'Automated Notifications' (one-way). Back-and-forth conversation requires the 'Two-Way SMS' feature found in the Grow plan.",
+    "ideal_keywords": ["Message Center", "Grow Plan", "Two-way texting", "Dedicated Phone Number"]
+  },
+  {
+    "id": "FIN-01",
+    "complexity": 2,
+    "topic": "Finance",
+    "persona": "The QuickBooks Power User",
+    "title": "Real-time vs. Retrospective Costing",
+    "query": "Owner: 'I track my receipts in QuickBooks. Why would I waste time entering material costs into Jobber as well? Isn't that just double-entry?'",
+    "objective": "Explain that while QB is for accounting, Jobber's 'Job Costing' (on Connect/Grow) provides real-time profit margins *during* the job, allowing for immediate course correction.",
+    "ideal_keywords": ["Job Costing", "Margins", "Material tracking", "Labor costs", "Real-time"]
+  },
+  {
+    "id": "SALES-01",
+    "complexity": 2,
+    "topic": "Sales",
+    "persona": "The Scaling Solo-preneur",
+    "title": "The Automated Sales Nudge",
+    "query": "Client: 'I'm losing deals because I forget to follow up. I see a Quote Follow-up setting, but it's locked. I'm on Connect—do I really need to upgrade just for a reminder?'",
+    "objective": "Confirm Quote Follow-ups are a Grow feature. Sell the ROI: Automating the 'nudge' saves hours of admin and typically pays for the upgrade with just one saved job.",
+    "ideal_keywords": ["Automated Quote Follow-ups", "Grow plan", "Conversion rate", "ROI"]
+  },
+  {
+    "id": "OPS-01",
+    "complexity": 1,
+    "topic": "Operations",
+    "persona": "The Micro-Manager",
+    "title": "The GPS Waypoint Mystery",
+    "query": "Manager: 'I want to see exactly where my team is right now, but the map only shows where they were at 8 AM. How do I get live tracking?'",
+    "objective": "Explain 'GPS Waypoints' (Connect/Grow) track location at specific 'action' points (clocking in/out). Constant live tracking usually requires a dedicated fleet GPS integration.",
+    "ideal_keywords": ["GPS Waypoints", "Timer", "Location tracking", "Breadcrumbs"]
+  },
+  {
+    "id": "ADMIN-01",
+    "complexity": 2,
+    "topic": "Admin",
+    "persona": "The High-Volume Cleaner",
+    "title": "The Required Deposit",
+    "query": "Client: 'I want to require a 25% deposit on every quote before it's approved. Can Jobber do this, or do I have to send a separate link?'",
+    "objective": "Explain Quote Deposits (Connect/Grow). Show how to enable 'Required' deposits so the Client Hub prompts for payment immediately upon approval.",
+    "ideal_keywords": ["Quote Deposits", "Jobber Payments", "Client Hub", "Automatic Approval"]
+  },
+  {
+    "id": "TECH-01",
+    "complexity": 2,
+    "topic": "Technical",
+    "persona": "The Basement Contractor",
+    "title": "Offline Mode Realities",
+    "query": "Tech: 'I'm working in a basement with zero service. If I complete the job in the app, will the office know immediately?'",
+    "objective": "Explain Jobber's 'Offline Support' (added in 2026). Data is stored locally and syncs automatically once a signal is found.",
+    "ideal_keywords": ["Sync", "Offline mode", "Local storage", "Queued data"]
+  },
+  {
+    "id": "PRO-01",
+    "complexity": 3,
+    "topic": "Sales Strategy",
+    "persona": "The Premium Landscaper",
+    "title": "Good/Better/Best Quoting",
+    "query": "Owner: 'I want my quotes to look like a menu where clients can choose a basic mow or add on mulch. How do I stop doing two separate quotes?'",
+    "objective": "Sell 'Optional Line Items' (Grow Feature). Explain how it allows the customer to 'upsell' themselves within the Client Hub.",
+    "ideal_keywords": ["Optional Line Items", "Upselling", "Grow plan", "Self-serve"]
+  },
+  {
+    "id": "SYNC-01",
+    "complexity": 3,
+    "topic": "QuickBooks",
+    "persona": "The Detail-Oriented Accountant",
+    "title": "The 'Deleted' Invoice Sync",
+    "query": "Accountant: 'I deleted an invoice in Jobber, but it's still sitting in QuickBooks. Why isn't the sync working?'",
+    "objective": "Clarify that the Jobber-QB sync is primarily for pushing *new* data. Deletions in Jobber do not automatically delete in QB to protect financial records.",
+    "ideal_keywords": ["QuickBooks Sync", "Manual void", "Data integrity", "Additive sync"]
+  },
+  {
+    "id": "GROW-01",
+    "complexity": 1,
+    "topic": "Scaling",
+    "persona": "The Busy Owner",
+    "title": "The 'Extra User' Trap",
+    "query": "Owner: 'I'm on Connect Team (5 users). I just hired my 6th guy. Should I just pay $29 for one extra seat or move to the Grow plan?'",
+    "objective": "Compare costs. Connect ($129 + $29 = $158) vs. Grow ($249). If they only need a seat, Connect is cheaper; if they need Two-Way SMS and Job Costing, Grow is the value play.",
+    "ideal_keywords": ["Per-user fee", "Connect Team", "Grow Team", "Seat limit"]
+  },
+  {
+    "id": "MAX-01",
+    "complexity": 3,
+    "topic": "Marketing",
+    "persona": "The Review Hunter",
+    "title": "The Review Engine",
+    "query": "Owner: 'I want a system that texts my customers for a Google Review the second the job is done. Is that just a setting?'",
+    "objective": "Explain 'Jobber Reviews' (Part of the Plus plan or a $39-$79 add-on). It is NOT standard on Connect/Grow without the Marketing Suite.",
+    "ideal_keywords": ["Marketing Suite", "Reviews Add-on", "Plus plan", "Google Business Profile"]
+  }
+]
