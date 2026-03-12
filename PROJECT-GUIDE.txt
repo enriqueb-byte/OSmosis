@@ -1,0 +1,164 @@
+================================================================================
+  OSmosis — Project guide (for non-developers)
+  (Updated as the project changes.)
+================================================================================
+
+QUICK REFERENCE — Key files
+---------------------------
+  Scenarios (add/edit/remove practice Q&As)   →  src/data/scenarios.json
+  Scorecard instructions for Gemini           →  src/data/gemini-preamble.md
+  Rules for Cursor when editing code          →  .cursorrules
+  Session length (how many scenarios, timer)  →  src/App.jsx
+
+
+WHAT THE APP DOES
+-----------------
+OSmosis is a practice drill for people who support or sell Jobber (field service
+software). A user runs a short session: they see 10 random scenario questions
+(customer-style queries), answer each in bullet points under a time limit, then
+get a summary. They can copy a "transcript" (questions + their answers) and
+paste it into Gemini to get a scorecard and feedback. No login, no backend—
+everything runs in the browser.
+
+
+HOW TO RUN THE APP LOCALLY
+--------------------------
+
+What is the terminal?
+  The terminal is a window where you type text commands instead of clicking.
+  Commands run in the "current folder" (directory). For npm run dev to work,
+  the terminal must be "in" your OSmosis project folder—the one that contains
+  package.json, src/, index.html, etc.
+
+Do I need to navigate somewhere before running "npm run dev"?
+  Yes. The terminal has to be in the OSmosis project folder. If you open the
+  terminal from Cursor with the OSmosis folder open as your project, it usually
+  starts there already. If not, you need to "go to" that folder first (see
+  below).
+
+Steps to run the app
+  1. Open the Cursor terminal (not the Mac Terminal app):
+       Terminal → New Terminal, or press Ctrl+` / Cmd+`.
+       It opens in your project folder so you can run commands right away.
+  2. If you ever use the Mac Terminal app instead, go to the project folder first by typing (then press Enter):
+       cd "/Users/enrique.b/Documents/AI Learning/OSmosis"
+       (Use your actual path if the project lives somewhere else. You can
+        drag the project folder into the terminal window to paste its path.)
+  3. Run the dev server:
+       npm run dev
+  4. Open the URL it prints (e.g. http://localhost:5173) in your browser.
+
+Do NOT try to open index.html by double-clicking it—that won't work. You must
+use the dev server and the URL it gives you.
+
+How to RESTART the dev server
+  • In the terminal where "npm run dev" is running, press:  Ctrl + C
+    (Mac: Ctrl + C, or sometimes Cmd + C depending on terminal.)
+  • That stops the server. Then run again:  npm run dev
+  • Open the new URL it prints (e.g. http://localhost:5173 or 5174) in your
+    browser. Bookmark that URL for quick access.
+
+How to check that the transcript includes the preamble (instructions for Gemini)
+  1. Start the app: in terminal run "npm run dev", then open the URL in your
+     browser.
+  2. Do a practice session: click "Start session", answer a scenario or two (you
+     can type anything), click Next until you see "Session complete."
+  3. Click the "Copy transcript" button.
+  4. Open any text editor (Notepad, TextEdit, Notes, or paste into a new
+     Cursor file). Paste (Ctrl+V or Cmd+V).
+  5. At the top you should see:
+       # OSmosis Session Transcript
+
+       ## Instructions for the scorer (e.g. Gemini)
+
+       You are scoring an OSmosis practice session...
+       (the full text from gemini-preamble.md)
+
+       ---
+
+       ## Session metadata
+       ...
+       ## Scenario Q&As (score these)
+       ...
+     If you see that, the preamble is included. You can then paste the same
+     text into Gemini to get a scorecard.
+
+To build the app for deployment (e.g. GitHub Pages):
+   npm run build
+Then the built files are in the "dist" folder.
+
+
+FOLDER AND FILE ORGANIZATION
+----------------------------
+
+  Project root
+  ------------
+  index.html          The single HTML page; points the browser to the app.
+  package.json        Lists dependencies and scripts (dev, build, preview).
+  vite.config.js      Build tool config (e.g. base path). Rarely needs changes.
+  tailwind.config.js  Styling (Tailwind) config. Rarely needs changes.
+  .cursorrules        Rules for Cursor (the IDE) when editing this codebase.
+  PROJECT-GUIDE.txt   This file.
+
+  src/
+  -----
+  main.jsx            Entry point: loads the main App and global styles.
+  App.jsx             Main app logic: session flow (start → scenarios → summary),
+                      how many scenarios per session (10), timer length (60 sec).
+  index.css           Global styles (Tailwind + a few custom classes).
+
+  src/components/
+  -----------------
+  StartScreen.jsx     The first screen: title and "Start session" button.
+  ScenarioCard.jsx   One scenario: shows the query, timer, and text area for
+                      the user's response; handles submit and next.
+  SessionSummary.jsx  End screen: lists scenarios answered, "Copy transcript"
+                      button. The transcript includes instructions for Gemini
+                      so the user can paste once and get a scorecard.
+
+  src/data/
+  ----------
+  scenarios.json      All practice scenarios. Each has: id, topic, persona,
+                      title, query (customer question), objective, ideal_keywords.
+                      Edit this file to add, remove, or change scenarios.
+  gemini-preamble.md  The instructions that get pasted into the transcript for
+                      Gemini. Edit this to change how Gemini scores and what
+                      kind of scorecard the user gets (tone, format, criteria).
+
+
+TWO FILES PEOPLE OFTEN CONFUSE
+------------------------------
+  .cursorrules         →  For Cursor (the code editor). Tells Cursor how to
+                           write and change code in this project. Edit this if
+                           you want to change coding style or project rules
+                           for anyone using Cursor here.
+
+  src/data/gemini-preamble.md  →  For Gemini (the AI that scores the session).
+                           This text is included in the copied transcript so
+                           when the user pastes into Gemini, Gemini knows the
+                           context (Jobber, OSmosis) and how to reply (e.g.
+                           scorecard format). Edit this to shape the final
+                           scorecard output—wording, criteria, structure.
+
+
+BASIC CHANGES YOU MIGHT WANT TO MAKE
+------------------------------------
+  • Add or edit practice scenarios    →  Edit src/data/scenarios.json
+  • Change how the scorecard looks    →  Edit src/data/gemini-preamble.md
+  • Change number of scenarios (e.g. 5) or timer (e.g. 90 sec)
+    →  Edit src/App.jsx (top constants: SCENARIO_COUNT, TIMER_SECONDS)
+  • Change app title or start-screen text  →  Edit index.html (title),
+    →  Edit src/components/StartScreen.jsx (heading and subtitle)
+  • Change styling (colors, spacing)  →  Edit src/index.css and/or
+    →  Edit the .jsx files (they use Tailwind classes like bg-indigo-500)
+
+
+DEPLOYMENT (GITHUB PAGES)
+-------------------------
+The app is set up to deploy to GitHub Pages on push to the main branch. The
+workflow is in .github/workflows/deploy-pages.yml. After a push to main, the
+"dist" folder from "npm run build" is published. The live site is the one that
+works when opened in a browser; for local work, always use "npm run dev" and
+the URL it prints.
+
+================================================================================

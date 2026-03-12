@@ -1,26 +1,62 @@
 import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import geminiPreambleRaw from '../data/gemini-preamble.md?raw'
 
+// Vite may give string or { default: string }; use a fallback if missing
+const getPreamble = () => {
+  const text = typeof geminiPreambleRaw === 'string' ? geminiPreambleRaw : (geminiPreambleRaw?.default ?? '')
+  const trimmed = (text || '').trim()
+  return trimmed || 'You are scoring an OSmosis practice session (Jobber field-service drill). Review the scenario Q&As below and produce a short scorecard. Reply only with the scorecard in markdown.'
+}
+
+/**
+ * Builds a self-contained transcript: preamble (prompts Gemini with Jobber context + instructions), then Q&As.
+ * User pastes once into Gemini and gets a scorecard back.
+ */
 function buildMarkdownTranscript(responses) {
-  const lines = [
+  const now = new Date()
+  const preamble = getPreamble()
+  const meta = [
+    'format: OSmosis Transcript',
+    'version: 1',
+    `session_date: ${now.toISOString().slice(0, 19)}Z`,
+    `scenario_count: ${responses.length}`,
+  ].join('\n')
+
+  const sections = responses.map((r, i) => [
+    `## Scenario ${i + 1}: ${r.scenarioId}`,
+    '',
+    '### Query',
+    '',
+    r.query.trim(),
+    '',
+    '### Response',
+    '',
+    r.response.trim(),
+    '',
+    '---',
+    '',
+  ].join('\n'))
+
+  return [
     '# OSmosis Session Transcript',
     '',
-    ...responses.flatMap((r, i) => [
-      `## ${i + 1}. Scenario ID: ${r.scenarioId}`,
-      '',
-      '**Query:**',
-      '',
-      r.query,
-      '',
-      '**Response:**',
-      '',
-      r.response,
-      '',
-      '---',
-      '',
-    ]),
-  ]
-  return lines.join('\n')
+    '## Instructions for the scorer (e.g. Gemini)',
+    '',
+    preamble,
+    '',
+    '---',
+    '',
+    '## Session metadata',
+    '',
+    '```',
+    meta,
+    '```',
+    '',
+    '## Scenario Q&As (score these)',
+    '',
+    sections.join(''),
+  ].join('\n').trimEnd() + '\n'
 }
 
 export default function SessionSummary({ responses, sessionComplete }) {
@@ -46,7 +82,7 @@ export default function SessionSummary({ responses, sessionComplete }) {
           Session complete
         </h2>
         <p className="text-zinc-500 text-sm mb-6">
-          {responses.length} scenarios answered
+          {responses.length} scenarios answered · Copy and paste into Gemini for a scorecard
         </p>
 
         <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-2">
