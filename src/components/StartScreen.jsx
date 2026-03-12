@@ -526,16 +526,16 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
               <p className="text-slate-800 font-medium mb-3">How it works</p>
               <div className="text-slate-600 text-sm leading-relaxed space-y-3 overflow-y-auto pr-1 flex-1 min-h-0">
                 <p>
-                  <strong>Scenarios.</strong> Questions are generated from Gemini, trained on Jobber content—real-world situations across leads, quotes, scheduling, communication, invoicing, and more.
+                  <strong>Scenarios.</strong> Questions are generated from Gemini, trained on Jobber content.
                 </p>
                 <p>
-                  <strong>Your session.</strong> You answer on the fly in timed scenarios. Each session produces a single output: your responses plus a built-in prompt for Gemini to review, score, and provide further insights.
+                  <strong>Your session.</strong> You answer on the fly in timed scenarios. Each session produces a single output for Gemini to review, score, and provide further insights.
                 </p>
                 <p>
-                  <strong>Why use it.</strong> OSmosis is a tool to develop your knowledge base in a real-time, dynamic environment. Practice under time pressure, get scored and guided by Gemini, and build confidence for support and sales conversations.
+                  <strong>Why use it.</strong> Develop your knowledge base in a real-time, dynamic environment. Practice under time pressure, get scored and guided, and build confidence for support and sales conversations.
                 </p>
-                <p className="text-slate-500 text-xs pt-2 border-t border-slate-100 mt-2">
-                  - Enrique Banuelos with Cursor &amp; Gemini
+                <p>
+                  <strong>Feedback.</strong> It's a gift, please provide your hot take on this tool @Enrique on Slack.
                 </p>
               </div>
               <div className="flex justify-end pt-4 mt-2 border-t border-slate-100">
