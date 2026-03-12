@@ -6,9 +6,12 @@
 QUICK REFERENCE — Key files
 ---------------------------
   Scenarios (add/edit/remove practice Q&As)   →  src/data/scenarios.json
+  Prompt used to generate scenarios (Gemini)  →  src/data/scenario-generation-prompt.md
+  Filter options (pillar, plan, difficulty, etc.)  →  src/data/scenarioFilters.js
   Scorecard instructions for Gemini           →  src/data/gemini-preamble.md
+  Test mode (fixed questions, time, filters)  →  src/data/testConfig.js
   Rules for Cursor when editing code          →  .cursorrules
-  Session length (how many scenarios, timer)  →  src/App.jsx
+  Session length (Practice mode defaults)     →  src/App.jsx
 
 
 WHAT THE APP DOES
@@ -109,7 +112,8 @@ FOLDER AND FILE ORGANIZATION
 
   src/components/
   -----------------
-  StartScreen.jsx     The first screen: title and "Start session" button.
+  StartScreen.jsx     The first screen: filter checkboxes (pillar, plan, etc.)
+                      and "Start session" button.
   ScenarioCard.jsx   One scenario: shows the query, timer, and text area for
                       the user's response; handles submit and next.
   SessionSummary.jsx  End screen: lists scenarios answered, "Copy transcript"
@@ -118,9 +122,10 @@ FOLDER AND FILE ORGANIZATION
 
   src/data/
   ----------
-  scenarios.json      All practice scenarios. Each has: id, topic, persona,
-                      title, query (customer question), objective, ideal_keywords.
-                      Edit this file to add, remove, or change scenarios.
+  scenarios.json      All practice scenarios (see "Scenario schema" below).
+  scenarioFilters.js  Defines filter criteria and options (Topics, Plan,
+                      Difficulty, Customer type). Edit to add/rename
+                      options; scenarios must use the same values.
   gemini-preamble.md  The instructions that get pasted into the transcript for
                       Gemini. Edit this to change how Gemini scores and what
                       kind of scorecard the user gets (tone, format, criteria).
@@ -141,16 +146,61 @@ TWO FILES PEOPLE OFTEN CONFUSE
                            scorecard output—wording, criteria, structure.
 
 
+PRACTICE VS TEST MODE
+---------------------
+  On the start screen you can choose Practice or Test.
+  • Practice: You pick how many questions, time per question, and optional
+    filters (Topics, Plan, Difficulty, Customer type). Full flexibility.
+  • Test: Fixed session—number of questions, time, and filters come from
+    src/data/testConfig.js (e.g. 10 questions, 60 sec each, all topics).
+    Change TEST_QUESTION_COUNT, TEST_TIMER_SECONDS, or TEST_FILTERS there
+    to customize the default test.
+
+  The "How it works" section at the bottom of the start screen explains
+  where scenarios come from, how the transcript and preamble work, how
+  scoring is done (in Gemini, not in the app), and who built it. Edit the
+  text in StartScreen.jsx inside the CollapsibleSection "How it works" if
+  you want to change that copy (e.g. "Built by you" → your name).
+
+
 BASIC CHANGES YOU MIGHT WANT TO MAKE
 ------------------------------------
   • Add or edit practice scenarios    →  Edit src/data/scenarios.json
   • Change how the scorecard looks    →  Edit src/data/gemini-preamble.md
-  • Change number of scenarios (e.g. 5) or timer (e.g. 90 sec)
-    →  Edit src/App.jsx (top constants: SCENARIO_COUNT, TIMER_SECONDS)
+  • Change Test mode defaults         →  Edit src/data/testConfig.js
+  • Change number of scenarios (e.g. 5) or timer (e.g. 90 sec) for Practice
+    →  Edit src/App.jsx (defaults used when no options passed)
   • Change app title or start-screen text  →  Edit index.html (title),
     →  Edit src/components/StartScreen.jsx (heading and subtitle)
   • Change styling (colors, spacing)  →  Edit src/index.css and/or
     →  Edit the .jsx files (they use Tailwind classes like bg-indigo-500)
+  • Add or change filter options (e.g. new pillar name)  →  src/data/scenarioFilters.js
+
+
+SCENARIO SCHEMA (FOR YOUR SCENARIOS)
+---------------------------------------
+Each scenario in scenarios.json must have: id, query. For filtering, use
+these field names and values exactly:
+
+  pillar     Number 1–8 (8 = App Integrations)
+  tier       "connect" or "grow"
+  difficulty 1 (Basics), 2 (Workflow), or 3 (Strategy/ROI)
+  persona   "busy_bee" | "micro_manager" | "burned_pro" | "tech_rookie"
+
+Example:
+  {
+    "id": "L-01",
+    "pillar": 1,
+    "tier": "connect",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "I'm losing leads because I can't answer the phone..."
+  }
+
+Optional: title, objective, ideal_keywords (for display or Gemini). ScenarioCard
+shows id, query, and level (difficulty) if present. Scenarios missing filter
+fields still appear when "any" is selected; they are skipped when filters
+are applied.
 
 
 DEPLOYMENT (GITHUB PAGES)

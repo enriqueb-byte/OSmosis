@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 body {
-  @apply bg-zinc-950 text-zinc-100 antialiased min-h-screen;
+  @apply bg-slate-50 text-slate-800 antialiased min-h-screen;
 }
 
 /* Borderless textarea look */
 .answer-input {
-  @apply w-full bg-transparent resize-none focus:outline-none focus:ring-0 placeholder-zinc-500;
+  @apply w-full bg-transparent resize-none focus:outline-none focus:ring-0 placeholder-slate-400;
 }
