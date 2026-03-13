@@ -1,5 +1,5 @@
 ================================================================================
-  OSmosis — Project guide (for non-developers)
+  Call Gym — Project guide (for non-developers)
   (Updated as the project changes.)
 ================================================================================
 
@@ -7,8 +7,11 @@ QUICK REFERENCE — Key files
 ---------------------------
   Scenarios (add/edit/remove practice Q&As)   →  src/data/scenarios.json
   Prompt used to generate scenarios (Gemini)  →  src/data/scenario-generation-prompt.md
-  Filter options (pillar, plan, difficulty, etc.)  →  src/data/scenarioFilters.js
+  Filter options (topic, difficulty, etc.)  →  src/data/scenarioFilters.js
   Scorecard instructions for Gemini           →  src/data/gemini-preamble.md
+  In the app, Settings (gear) → "Under the hood" explains and points to the
+  scenario prompt and scoring preamble files (scenario-generation-prompt.md,
+  gemini-preamble.md).
   Assessment mode (fixed questions, time, filters)  →  src/data/testConfig.js
   Rules for Cursor when editing code          →  .cursorrules
   Session length (Practice mode defaults)     →  src/App.jsx
@@ -16,7 +19,7 @@ QUICK REFERENCE — Key files
 
 WHAT THE APP DOES
 -----------------
-OSmosis is a practice drill for people who support or sell Jobber (field service
+Call Gym is a practice drill for people who support or sell Jobber (field service
 software). A user runs a short session: they see 10 random scenario questions
 (customer-style queries), answer each in bullet points under a time limit, then
 get a summary. They can copy a "transcript" (questions + their answers) and
@@ -30,12 +33,12 @@ HOW TO RUN THE APP LOCALLY
 What is the terminal?
   The terminal is a window where you type text commands instead of clicking.
   Commands run in the "current folder" (directory). For npm run dev to work,
-  the terminal must be "in" your OSmosis project folder—the one that contains
+  the terminal must be "in" your Call Gym project folder—the one that contains
   package.json, src/, index.html, etc.
 
 Do I need to navigate somewhere before running "npm run dev"?
-  Yes. The terminal has to be in the OSmosis project folder. If you open the
-  terminal from Cursor with the OSmosis folder open as your project, it usually
+  Yes. The terminal has to be in the Call Gym project folder. If you open the
+  terminal from Cursor with the Call Gym folder open as your project, it usually
   starts there already. If not, you need to "go to" that folder first (see
   below).
 
@@ -44,7 +47,7 @@ Steps to run the app
        Terminal → New Terminal, or press Ctrl+` / Cmd+`.
        It opens in your project folder so you can run commands right away.
   2. If you ever use the Mac Terminal app instead, go to the project folder first by typing (then press Enter):
-       cd "/Users/enrique.b/Documents/AI Learning/OSmosis"
+       cd "/Users/enrique.b/Documents/AI Learning/Call Gym"
        (Use your actual path if the project lives somewhere else. You can
         drag the project folder into the terminal window to paste its path.)
   3. Run the dev server:
@@ -70,11 +73,11 @@ How to check that the transcript includes the preamble (instructions for Gemini)
   4. Open any text editor (Notepad, TextEdit, Notes, or paste into a new
      Cursor file). Paste (Ctrl+V or Cmd+V).
   5. At the top you should see:
-       # OSmosis Session Transcript
+       # Call Gym Session Transcript
 
        ## Instructions for the scorer (e.g. Gemini)
 
-       You are scoring an OSmosis practice session...
+       You are scoring a Call Gym practice session...
        (the full text from gemini-preamble.md)
 
        ---
@@ -112,7 +115,7 @@ FOLDER AND FILE ORGANIZATION
 
   src/components/
   -----------------
-  StartScreen.jsx     The first screen: filter checkboxes (pillar, plan, etc.)
+  StartScreen.jsx     The first screen: filter checkboxes (topic, difficulty, etc.)
                       and "Start session" button.
   ScenarioCard.jsx   One scenario: shows the query, timer, and text area for
                       the user's response; handles submit and next.
@@ -123,7 +126,7 @@ FOLDER AND FILE ORGANIZATION
   src/data/
   ----------
   scenarios.json      All practice scenarios (see "Scenario schema" below).
-  scenarioFilters.js  Defines filter criteria and options (Topics, Plan,
+  scenarioFilters.js  Defines filter criteria and options (Topics,
                       Difficulty, Customer type). Edit to add/rename
                       options; scenarios must use the same values.
   gemini-preamble.md  The instructions that get pasted into the transcript for
@@ -141,7 +144,7 @@ TWO FILES PEOPLE OFTEN CONFUSE
   src/data/gemini-preamble.md  →  For Gemini (the AI that scores the session).
                            This text is included in the copied transcript so
                            when the user pastes into Gemini, Gemini knows the
-                           context (Jobber, OSmosis) and how to reply (e.g.
+                           context (Jobber, Call Gym) and how to reply (e.g.
                            scorecard format). Edit this to shape the final
                            scorecard output—wording, criteria, structure.
 
@@ -150,7 +153,7 @@ PRACTICE VS ASSESSMENT MODE
 ---------------------------
   On the start screen you can choose Practice or Assessment.
   • Practice: You pick how many questions, time per question, and optional
-    filters (Topics, Plan, Difficulty, Customer type). Full flexibility.
+    filters (Topics, Difficulty, Customer type). Full flexibility.
   • Assessment: Fixed session—number of questions, time, and filters come from
     src/data/testConfig.js (e.g. 10 questions, 60 sec each, all topics).
     Change TEST_QUESTION_COUNT, TEST_TIMER_SECONDS, or TEST_FILTERS there
@@ -174,7 +177,7 @@ BASIC CHANGES YOU MIGHT WANT TO MAKE
     →  Edit src/components/StartScreen.jsx (heading and subtitle)
   • Change styling (colors, spacing)  →  Edit src/index.css and/or
     →  Edit the .jsx files (they use Tailwind classes like bg-indigo-500)
-  • Add or change filter options (e.g. new pillar name)  →  src/data/scenarioFilters.js
+  • Add or change filter options (e.g. new topic name)  →  src/data/scenarioFilters.js
 
 
 SCENARIO SCHEMA (FOR YOUR SCENARIOS)
@@ -182,15 +185,18 @@ SCENARIO SCHEMA (FOR YOUR SCENARIOS)
 Each scenario in scenarios.json must have: id, query. For filtering, use
 these field names and values exactly:
 
-  pillar     Number 1–8 (8 = App Integrations)
-  tier       "connect" or "grow"
+  topic      Topic name: "Leads" | "Quotes" | "Scheduling" | "Operations" |
+             "Communication" | "Invoicing & Payments" | "Finance" | "App Integrations"
   difficulty 1 (Basics), 2 (Workflow), or 3 (Strategy/ROI)
   persona   "busy_bee" | "micro_manager" | "burned_pro" | "tech_rookie"
+
+  Optional (metadata only; not used for filtering):
+  tier       "connect" or "grow" — for authoring when scenario is plan-specific.
 
 Example:
   {
     "id": "L-01",
-    "pillar": 1,
+    "topic": "Leads",
     "tier": "connect",
     "difficulty": 1,
     "persona": "busy_bee",

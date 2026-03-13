@@ -1,402 +1,1787 @@
 [
   {
-    "id": "L-01",
-    "pillar": 1,
-    "tier": "connect",
+    "id": 1,
+    "topic": "Leads",
     "difficulty": 1,
     "persona": "busy_bee",
-    "query": "I'm losing leads because I can't answer the phone while I'm mowing. Can I just put a form on my site where they book themselves?"
+    "query": "I just got a call from a new customer while driving. How do I get them into the system quickly without typing a whole novel on my phone?"
   },
   {
-    "id": "Q-01",
-    "pillar": 2,
-    "tier": "connect",
-    "difficulty": 2,
-    "persona": "burned_pro",
-    "query": "My last app messed up my tax mapping. If I add a 'Discount' line item to a quote here, does it sync to QBO as a 'Discount' or just a negative service?"
-  },
-  {
-    "id": "F-01",
-    "pillar": 7,
-    "tier": "connect",
+    "id": 2,
+    "topic": "Quotes",
     "difficulty": 3,
-    "persona": "micro_manager",
-    "query": "I can see labor hours, but I have no idea if I'm actually making money after material costs. Do I have to use a spreadsheet for this or can Jobber tell me my margin?"
-  },
-  {
-    "id": "C-01",
-    "pillar": 5,
-    "tier": "connect",
-    "difficulty": 2,
-    "persona": "busy_bee",
-    "query": "I sent an 'On My Way' text, but the client replied that the gate is locked and I never saw it. Why isn't the reply in the app?"
-  },
-  {
-    "id": "S-01",
-    "pillar": 3,
+    "persona": "burned_pro",
     "tier": "grow",
+    "query": "My last software said it sent quotes, but they ended up in spam and I lost $5k. How does Jobber's 'Automatic Follow-up' on the Grow plan actually ensure I'm not just shouting into the void?"
+  },
+  {
+    "id": 3,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I need my team to see the exact GPS coordinates for the gate code, not just the house address. Where do I put that so it pops up the second they arrive?"
+  },
+  {
+    "id": 4,
+    "topic": "Communication",
     "difficulty": 1,
     "persona": "tech_rookie",
-    "query": "I want my 'Mowing' jobs to be green and my 'Install' jobs to be blue on the calendar. How do I color-code by service type?"
-  },
-  {
-    "id": "I-01",
-    "pillar": 6,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "burned_pro",
-    "query": "If I collect a deposit through Jobber Payments, does QBO see that as an 'Invoice' or a 'Credit Memo' until the job is done?"
-  },
-  {
-    "id": "O-01",
-    "pillar": 4,
     "tier": "connect",
-    "difficulty": 3,
-    "persona": "micro_manager",
-    "query": "I need my techs to take exactly 4 photos and check a safety box before they can clock out. Can I make those fields mandatory?"
+    "query": "I'm on Connect. If I send an 'On My Way' text, does it come from my personal cell number? I don't want clients texting me at 11 PM on Sundays!"
   },
   {
-    "id": "Q-02",
-    "pillar": 2,
-    "tier": "connect",
-    "difficulty": 3,
-    "persona": "tech_rookie",
-    "query": "I want to give my clients a 'Good/Better/Best' option on a single quote. How do I let them pick the package they want?"
-  },
-  {
-    "id": "L-02",
-    "pillar": 1,
-    "tier": "grow",
+    "id": 5,
+    "topic": "Invoicing & Payments",
     "difficulty": 2,
     "persona": "busy_bee",
-    "query": "Does Jobber have a way to automatically text a lead back the second they submit a request from my website?"
+    "query": "I have 20 invoices from today. Is there a way to just send them all at once? I've got a soccer game to get to and can't click 'Send' 20 times."
   },
   {
-    "id": "INT-01",
-    "pillar": 8,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "micro_manager",
-    "query": "I have 40 'Sync Errors' saying my Sales Tax doesn't match. If I ignore these, will my QBO reports still be accurate?"
-  },
-  {
-    "id": "S-02",
-    "pillar": 3,
-    "tier": "connect",
-    "difficulty": 2,
-    "persona": "micro_manager",
-    "query": "My guys are crisscrossing town. Is there a button to 'Optimize' their route so they aren't wasting gas?"
-  },
-  {
-    "id": "F-02",
-    "pillar": 7,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "burned_pro",
-    "query": "If I update my service price in Jobber, does it update my 'Products and Services' list in QuickBooks automatically?"
-  },
-  {
-    "id": "C-02",
-    "pillar": 5,
-    "tier": "grow",
-    "difficulty": 3,
-    "persona": "tech_rookie",
-    "query": "I want to set an automation: If a quote isn't signed in 24 hours, text them. If still not signed in 48 hours, email them. Can I build that?"
-  },
-  {
-    "id": "I-02",
-    "pillar": 6,
-    "tier": "connect",
-    "difficulty": 1,
-    "persona": "busy_bee",
-    "query": "I'm with a client now. How do I take their credit card info through the app without a physical reader?"
-  },
-  {
-    "id": "O-02",
-    "pillar": 4,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "burned_pro",
-    "query": "My techs keep forgetting to clock out. Can the app automatically clock them out when they leave the job site GPS circle?"
-  },
-  {
-    "id": "Q-03",
-    "pillar": 2,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "micro_manager",
-    "query": "I want to require a 50% deposit before a quote is 'Approved.' Does the client pay that through the Client Hub?"
-  },
-  {
-    "id": "S-03",
-    "pillar": 3,
-    "tier": "connect",
-    "difficulty": 3,
-    "persona": "busy_bee",
-    "query": "I have a big project that takes 4 days. Right now it shows as 4 separate jobs. Is there a way to link them as one big visit?"
-  },
-  {
-    "id": "INT-02",
-    "pillar": 8,
-    "tier": "connect",
-    "difficulty": 2,
-    "persona": "tech_rookie",
-    "query": "I deleted an invoice in Jobber by mistake. Why is it still sitting in my QuickBooks? Now my numbers are double-counted."
-  },
-  {
-    "id": "C-03",
-    "pillar": 5,
-    "tier": "grow",
-    "difficulty": 1,
-    "persona": "burned_pro",
-    "query": "When I send a quote, do my clients have to download the Jobber app or create a password to see it? They hate doing that."
-  },
-  {
-    "id": "I-03",
-    "pillar": 6,
-    "tier": "grow",
+    "id": 6,
+    "topic": "Operations",
     "difficulty": 3,
     "persona": "micro_manager",
-    "query": "I have 60 recurring clients. Can I just store their card on file and have Jobber charge them automatically the day after the service?"
+    "tier": "grow",
+    "query": "I want to track exactly how much mulch we use per job vs. what I quoted. Can I make a 'required field' in a Job Form that stops them from closing the job without entering a quantity?"
   },
   {
-    "id": "O-03",
-    "pillar": 4,
-    "tier": "connect",
-    "difficulty": 1,
-    "persona": "busy_bee",
-    "query": "I put notes about the gate code and the dog in Jobber. Where does my tech actually see those in the mobile app?"
-  },
-  {
-    "id": "L-03",
-    "pillar": 1,
-    "tier": "connect",
+    "id": 7,
+    "topic": "Finance",
     "difficulty": 2,
     "persona": "burned_pro",
-    "query": "If I get a lead through my website, does it notify me via text, or do I have to keep the Jobber dashboard open all day?"
+    "query": "I'm looking at my 'Transaction List.' It says a payment is 'Pending.' My bank says it's not there. Who is lying to me, and where is my money?"
   },
   {
-    "id": "Q-04",
-    "pillar": 2,
-    "tier": "connect",
+    "id": 8,
+    "topic": "App Integrations",
     "difficulty": 1,
     "persona": "tech_rookie",
-    "query": "Can I add my logo and change the font on my quotes, or are they all just a generic template?"
+    "query": "I just connected QuickBooks. Does it take all my old stuff from 2019 and put it into Jobber? I'm scared it's going to make a mess of my books."
   },
   {
-    "id": "S-04",
-    "pillar": 3,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "busy_bee",
-    "query": "My main tech is sick. How do I drag all 12 of his jobs today to another user in one go?"
-  },
-  {
-    "id": "INT-03",
-    "pillar": 8,
-    "tier": "grow",
-    "difficulty": 3,
-    "persona": "micro_manager",
-    "query": "I want to track 'Labor Burden'—not just wages, but overhead. Can Jobber push that granular costing data into my QBO P&L?"
-  },
-  {
-    "id": "C-04",
-    "pillar": 5,
-    "tier": "connect",
-    "difficulty": 2,
-    "persona": "burned_pro",
-    "query": "Clients say they aren't getting my emails. Is there a log where I can prove to them that the email was sent and opened?"
-  },
-  {
-    "id": "I-04",
-    "pillar": 6,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "tech_rookie",
-    "query": "When a client pays an invoice with a credit card, does Jobber record the 'Processing Fee' as an expense in QBO automatically?"
-  },
-  {
-    "id": "O-04",
-    "pillar": 4,
-    "tier": "grow",
+    "id": 9,
+    "topic": "Scheduling",
     "difficulty": 3,
     "persona": "busy_bee",
-    "query": "I want my techs to be able to upsell and create a new Quote for extra work while they are standing in the client's driveway. Is that allowed?"
+    "query": "I have a recurring contract for 12 months. If the client cancels in month 3, do I have to delete 9 individual visits manually?"
   },
   {
-    "id": "L-04",
-    "pillar": 1,
-    "tier": "grow",
+    "id": 10,
+    "topic": "Quotes",
     "difficulty": 2,
     "persona": "micro_manager",
-    "query": "I'm running Facebook Ads. Can Jobber tell me which specific requests came from my ads versus my organic website traffic?"
+    "tier": "grow",
+    "query": "I want to offer three different price tiers for a roof cleaning—Basic, Pro, and Deluxe. How do I set it up so they can only pick one and the others disappear?"
   },
   {
-    "id": "Q-05",
-    "pillar": 2,
-    "tier": "connect",
-    "difficulty": 3,
+    "id": 11,
+    "topic": "Communication",
+    "difficulty": 2,
     "persona": "burned_pro",
-    "query": "I already 'Approved' a quote, but the price of materials just went up. Can I edit the price now, or is it locked forever?"
+    "tier": "grow",
+    "query": "I heard Grow has 'Campaigns.' I'm skeptical. If I blast my 500 past customers, how do I know I'm not just paying for a one-way trip to their 'Unsubscribe' button?"
   },
   {
-    "id": "S-05",
-    "pillar": 3,
-    "tier": "connect",
+    "id": 12,
+    "topic": "Leads",
     "difficulty": 1,
     "persona": "tech_rookie",
-    "query": "What's the difference between a 'Job' and a 'Task' on the calendar? I just want to schedule a 15-minute estimate."
+    "query": "I put the 'Request a Quote' button on my Facebook page. When someone clicks it, do I get a text, or does it just magically show up in the calendar?"
   },
   {
-    "id": "F-03",
-    "pillar": 7,
-    "tier": "grow",
+    "id": 13,
+    "topic": "Invoicing & Payments",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "A client wants to pay half now and half in 30 days. How do I track that 'Partial Payment' without the invoice looking like it's overdue the whole time?"
+  },
+  {
+    "id": 14,
+    "topic": "Operations",
     "difficulty": 1,
     "persona": "busy_bee",
-    "query": "I need a list of every customer who owes me money for more than 30 days. Where is the 'Aging' report?"
+    "query": "My technician says he can't see the 'Notes' I wrote. Is he just blind, or is there a setting I missed to make my internal notes visible to the crew?"
   },
   {
-    "id": "C-05",
-    "pillar": 5,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "micro_manager",
-    "query": "Can my clients log in somewhere to see their own history, old photos, and past invoices without having to call me?"
-  },
-  {
-    "id": "INT-04",
-    "pillar": 8,
-    "tier": "connect",
-    "difficulty": 2,
-    "persona": "burned_pro",
-    "query": "I have two bank accounts in QBO. How do I make sure my Jobber Payments land in 'Checking' instead of 'Savings'?"
-  },
-  {
-    "id": "O-05",
-    "pillar": 4,
-    "tier": "connect",
-    "difficulty": 2,
-    "persona": "tech_rookie",
-    "query": "I'm working in a basement with zero cell service. If I complete the job and take photos, will the app delete them when I close it?"
-  },
-  {
-    "id": "Q-06",
-    "pillar": 2,
-    "tier": "grow",
-    "difficulty": 3,
-    "persona": "busy_bee",
-    "query": "I have 50 quotes out. I don't have time to follow up. Can Jobber just bug them every 3 days until they sign?"
-  },
-  {
-    "id": "S-06",
-    "pillar": 3,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "burned_pro",
-    "query": "I don't want my techs to see the 'Master' calendar. I only want them to see their own names. How do I hide everyone else?"
-  },
-  {
-    "id": "INT-05",
-    "pillar": 8,
-    "tier": "connect",
-    "difficulty": 3,
-    "persona": "micro_manager",
-    "query": "My QBO uses 'Classes' for different locations. Does Jobber sync that 'Class' data, or do I have to re-tag everything in QuickBooks?"
-  },
-  {
-    "id": "C-06",
-    "pillar": 5,
-    "tier": "connect",
-    "difficulty": 1,
-    "persona": "tech_rookie",
-    "query": "How do I set it up so every time a job is finished, the client gets a 'Thank You' email automatically?"
-  },
-  {
-    "id": "I-05",
-    "pillar": 6,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "busy_bee",
-    "query": "I want the invoice to be sent the exact moment my tech hits 'Complete' on the app. Can I automate that?"
-  },
-  {
-    "id": "O-06",
-    "pillar": 4,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "burned_pro",
-    "query": "Can I track my equipment (trailers/mowers) in Jobber, or is it only for tracking people?"
-  },
-  {
-    "id": "L-05",
-    "pillar": 1,
-    "tier": "connect",
-    "difficulty": 3,
-    "persona": "tech_rookie",
-    "query": "Can I connect my 'Contact Us' button on my Facebook page directly so the lead flows into Jobber as a Request?"
-  },
-  {
-    "id": "Q-07",
-    "pillar": 2,
-    "tier": "connect",
-    "difficulty": 2,
-    "persona": "micro_manager",
-    "query": "I want to know who opened my quote and how many times they looked at it before they signed. Does Jobber track 'Email Opens'?"
-  },
-  {
-    "id": "S-07",
-    "pillar": 3,
-    "tier": "grow",
+    "id": 15,
+    "topic": "Finance",
     "difficulty": 3,
     "persona": "burned_pro",
-    "query": "I want to schedule based on 'Map View'—I want to physically see the distance between jobs before I assign them. Can I drag and drop on a map?"
+    "tier": "grow",
+    "query": "You guys have 'Job Costing.' Does that account for the gas my guys use, or just the hours they clock in? I need to know my actual profit, not a 'best guess' number."
   },
   {
-    "id": "INT-06",
-    "pillar": 8,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "busy_bee",
-    "query": "Does Jobber sync my gas and material 'Expense' receipts into QBO, or does it only sync 'Income' like invoices?"
-  },
-  {
-    "id": "C-07",
-    "pillar": 5,
-    "tier": "grow",
+    "id": 16,
+    "topic": "Scheduling",
     "difficulty": 2,
     "persona": "tech_rookie",
-    "query": "Can I send a 'Blast' text to all my customers at once to tell them we are closed for the fourth of July?"
+    "query": "I want to use 'Route Optimization' but I'm worried it's going to put my morning coffee stop in the middle of a job. How do I tell it which house to start at?"
   },
   {
-    "id": "I-06",
-    "pillar": 6,
-    "tier": "connect",
-    "difficulty": 3,
-    "persona": "micro_manager",
-    "query": "I want to charge a 3% 'Convenience Fee' automatically if they choose to pay by credit card. Can Jobber do that?"
-  },
-  {
-    "id": "O-07",
-    "pillar": 4,
-    "tier": "grow",
+    "id": 17,
+    "topic": "Quotes",
     "difficulty": 1,
     "persona": "busy_bee",
-    "query": "My tech can't 'Stop Timer' because the app says he's too far away from the job site. How do I let him bypass that?"
+    "query": "I'm standing in a driveway. Can I just snap a photo of the house and attach it to the quote right now, or do I have to wait until I'm back at my desk?"
   },
   {
-    "id": "Q-08",
-    "pillar": 2,
-    "tier": "grow",
-    "difficulty": 2,
-    "persona": "burned_pro",
-    "query": "When a client signs a quote in the Client Hub, is that a legally binding signature? Does it save their IP address?"
-  },
-  {
-    "id": "INT-07",
-    "pillar": 8,
-    "tier": "grow",
+    "id": 18,
+    "topic": "Communication",
     "difficulty": 3,
     "persona": "micro_manager",
-    "query": "If I use Jobber 'Job Costing,' does it break down the 'Cost of Goods Sold' (COGS) in my QBO Profit & Loss statement, or is that data stuck in Jobber?"
+    "query": "I want an email to go out exactly 24 hours after a job is done asking for a Google review, but only for certain services. How do I filter who gets that?"
+  },
+  {
+    "id": 19,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I use Mailchimp for my newsletters. If I connect it to Jobber, is it going to create 400 duplicate contacts? I've spent years cleaning that list up."
+  },
+  {
+    "id": 20,
+    "topic": "Invoicing & Payments",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "tier": "connect",
+    "query": "Can I take a credit card payment over the phone on the Connect plan, or do I have to be standing right in front of them with a card reader?"
+  },
+  {
+    "id": 21,
+    "topic": "Operations",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I have two guys on one truck. Can they both clock into the same job at the same time, or will that mess up the labor tracking?"
+  },
+  {
+    "id": 22,
+    "topic": "Leads",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I want to know which of my Google Ads is actually bringing in the most revenue, not just clicks. Can I tag a lead with a 'Source' that follows them all the way to the invoice?"
+  },
+  {
+    "id": 23,
+    "topic": "Finance",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I see a 'Tax' column. Does Jobber calculate my state sales tax automatically, or do I have to do the math every time I make an invoice?"
+  },
+  {
+    "id": 24,
+    "topic": "Scheduling",
+    "difficulty": 1,
+    "persona": "burned_pro",
+    "query": "What happens if a job takes longer than planned? Does the next job on the calendar move automatically, or am I going to be looking at a screen full of red 'overdue' boxes?"
+  },
+  {
+    "id": 25,
+    "topic": "Quotes",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "tier": "grow",
+    "query": "I want to add a 'Terms and Conditions' contract that they have to sign with their finger before they can even see the 'Accept Quote' button. Is that a thing?"
+  },
+  {
+    "id": 26,
+    "topic": "Communication",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "If I change a job time, does the customer get an email automatically? I don't want to call everyone just because I'm running 20 minutes late."
+  },
+  {
+    "id": 27,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "tier": "grow",
+    "query": "I have a property manager who pays for 10 different houses on one check. How do I apply that one payment to 10 different invoices without losing my mind?"
+  },
+  {
+    "id": 28,
+    "topic": "Operations",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "query": "My employees are 'forgetting' to clock out. Can I set up a geofence that reminds them to clock out when they drive away from the customer's house?"
+  },
+  {
+    "id": 29,
+    "topic": "Leads",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I have a list of 1,000 leads from a home show. Can I just drop them into Jobber as 'Leads' so they don't count as 'Clients' yet? I don't want to pay for people I haven't sold to yet."
+  },
+  {
+    "id": 30,
+    "topic": "Finance",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I need a report that shows me how much money I'm *going* to make next month based on the schedule. Where's the 'Projected Income' button?"
+  },
+  {
+    "id": 31,
+    "topic": "App Integrations",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "If I use the FleetSharp integration, does it actually show my truck's location on the Jobber map, or is it just another tab I have to keep open?"
+  },
+  {
+    "id": 32,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I hate 'Anytime' jobs. If I put a job on the calendar without a time, my guys just skip it. How do I make sure it stays at the top of their list until it's done?"
+  },
+  {
+    "id": 33,
+    "topic": "Quotes",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I made a mistake on a quote I already sent. Can I edit it and have the link they already have update automatically, or do I have to send a whole new email?"
+  },
+  {
+    "id": 34,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "A client says they never got my email. Can I see if they opened it, or am I just supposed to take their word for it?"
+  },
+  {
+    "id": 35,
+    "topic": "Invoicing & Payments",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "tier": "grow",
+    "query": "I do monthly maintenance. Can I just store a client's credit card and charge it automatically every time we finish the visit, or do they have to click 'Pay' every month?"
+  },
+  {
+    "id": 36,
+    "topic": "Operations",
+    "difficulty": 1,
+    "persona": "micro_manager",
+    "query": "I want to see a history of every time a technician changed a status. If they marked it 'Complete' then changed it back, will I know?"
+  },
+  {
+    "id": 37,
+    "topic": "Leads",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "I'm on a job and someone walks up and asks for an estimate. Can I just scan their driver's license or something to get their info in fast?"
+  },
+  {
+    "id": 38,
+    "topic": "Finance",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "query": "I want to calculate commissions for my sales guy. Does Jobber track who sold the job vs. who did the work, and can I run a report on that?"
+  },
+  {
+    "id": 39,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I use 'CompanyCam' for all my photos. Do those sync over to the Jobber job automatically, or do I have to download and re-upload them?"
+  },
+  {
+    "id": 40,
+    "topic": "Scheduling",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I have a job that takes 3 days. I want 3 different techs on it for different parts. Do I have to make 3 separate jobs, or can I split one job across them?"
+  },
+  {
+    "id": 41,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "Customers always try to haggle. Can I put a 'Discount' line on the quote that shows them exactly how much I'm taking off so they stop asking for more?"
+  },
+  {
+    "id": 42,
+    "topic": "Communication",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I want to send a 'Happy Birthday' text to my clients. Is there a way to store their birthday and have it trigger a message?"
+  },
+  {
+    "id": 43,
+    "topic": "Invoicing & Payments",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "The job is done and I'm standing with the client. How do I show them the invoice on my phone so they can just pay me right now?"
+  },
+  {
+    "id": 44,
+    "topic": "Operations",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "tier": "grow",
+    "query": "I have a specific 'Checklist' for cleaning a pool. Can I make it so the tech *has* to check off every item before the 'Finish' button even appears?"
+  },
+  {
+    "id": 45,
+    "topic": "Leads",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "query": "I'm sick of tire-kickers. Can I charge a 'Consultation Fee' through the lead form before I even agree to come out and look at the job?"
+  },
+  {
+    "id": 46,
+    "topic": "Finance",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I noticed my 'Aged Receivables' is high. Can I see a list of every client who hasn't paid in 60 days and bulk-email them a reminder?"
+  },
+  {
+    "id": 47,
+    "topic": "App Integrations",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "If I connect my Google Calendar, will my wife's dentist appointments show up on my Jobber schedule? That would be a disaster."
+  },
+  {
+    "id": 48,
+    "topic": "Scheduling",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "I need to reschedule a whole day because of rain. Is there a way to 'drag and drop' the entire Tuesday onto Wednesday without opening every job?"
+  },
+  {
+    "id": 49,
+    "topic": "Quotes",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I want to see how long my salesperson spends looking at a quote before they send it. Does Jobber track 'Time Spent' on the drafting phase?"
+  },
+  {
+    "id": 50,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "Every time I send a text, I feel like I'm bothering people. Does the system show me if they've opted out of marketing so I don't get a spam complaint?"
+  },
+  {
+    "id": 51,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I have a two-man crew. I want the Lead Tech to see the pricing on the app, but the Helper should only see the address and the checklist. Can I hide the dollars from one of them?"
+  },
+  {
+    "id": 52,
+    "topic": "Invoicing & Payments",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "tier": "grow",
+    "query": "I do big landscaping jobs. I need to bill 30% upfront as a deposit, 40% halfway, and the rest at the end. How do I do 'Progress Invoicing' without the customer thinking I'm billing them for the same thing twice?"
+  },
+  {
+    "id": 53,
+    "topic": "Communication",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "I'm tired of playing phone tag. Can I just send a link where the customer picks their own time for an estimate, or do I have to approve every single one?"
+  },
+  {
+    "id": 54,
+    "topic": "Operations",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I want to track my equipment. Can I 'assign' my big power washer to a specific job so I know which truck it's on today?"
+  },
+  {
+    "id": 55,
+    "topic": "Finance",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I'm looking at my 'Tax Summary.' Does this separate the tax I collected for the city vs. the state, or do I have to pull a CSV and do that myself?"
+  },
+  {
+    "id": 56,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I sent a quote for 5 trees. The client only wants to do 3. Can I change the quantity on my phone while I'm standing there, or do I need to go 'Edit' the whole thing?"
+  },
+  {
+    "id": 57,
+    "topic": "Leads",
+    "difficulty": 1,
+    "persona": "burned_pro",
+    "query": "If I put the lead form on my site, is it going to notify me via text immediately? If I don't call them in 5 minutes, they've already moved to the next guy on Google."
+  },
+  {
+    "id": 58,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I'm using 'NiceJob' for reviews. Does Jobber tell NiceJob the second I finish the work, or should I wait until they actually pay the invoice?"
+  },
+  {
+    "id": 59,
+    "topic": "Scheduling",
+    "difficulty": 3,
+    "persona": "busy_bee",
+    "query": "I've got 50 recurring lawn clients. If a holiday falls on a Monday, can I shift all 50 jobs to Tuesday with one click, or is my holiday going to be spent clicking 'Edit' 50 times?"
+  },
+  {
+    "id": 60,
+    "topic": "Invoicing & Payments",
+    "difficulty": 1,
+    "persona": "micro_manager",
+    "query": "When a customer pays online, do they get a receipt automatically? I don't want them calling me to ask 'did you get it?' every time."
+  },
+  {
+    "id": 61,
+    "topic": "Operations",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "tier": "grow",
+    "query": "I'm using 'Job Forms.' If a tech takes a photo of a broken window before they start, can I make sure that photo is *attached* to the job forever so they can't blame us later?"
+  },
+  {
+    "id": 62,
+    "topic": "Communication",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "tier": "grow",
+    "query": "I want to send an email to everyone I haven't worked with in 6 months with a 10% off coupon. Does 'Campaigns' know who hasn't had a visit lately?"
+  },
+  {
+    "id": 63,
+    "topic": "Finance",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "Where do I find how much I paid in credit card fees last month? I need that number for my accountant right now."
+  },
+  {
+    "id": 64,
+    "topic": "Quotes",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I have different sales tax for different counties. If I drive across the county line, does Jobber update the tax rate based on the job address automatically?"
+  },
+  {
+    "id": 65,
+    "topic": "Leads",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I have 'Lead Labels.' Can I set a rule that any lead labeled 'Urgent' turns red on my dashboard?"
+  },
+  {
+    "id": 66,
+    "topic": "App Integrations",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "query": "I use 'QuickBooks Desktop,' not Online. Is there any way to make this work, or am I stuck doing double-entry for the rest of my life?"
+  },
+  {
+    "id": 67,
+    "topic": "Scheduling",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "How do I see my schedule for the whole month? The 'Day View' is too cramped when I'm trying to plan out my big projects."
+  },
+  {
+    "id": 68,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "If I 'Record a Payment' as Cash, does it still send the customer a notification? I need to make sure they know their balance is zero."
+  },
+  {
+    "id": 69,
+    "topic": "Operations",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "tier": "grow",
+    "query": "I want to use 'Line Item Images' on my invoices so they can see exactly what 'Part #502' looks like. Is that possible on the mobile app?"
+  },
+  {
+    "id": 70,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "tier": "connect",
+    "query": "I'm on Connect. A customer texted the Jobber number and I didn't see it for three days. Why didn't my phone buzz? This makes me look unprofessional."
+  },
+  {
+    "id": 71,
+    "topic": "Finance",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I need to see which of my services is making the most money. Is there a report that breaks down revenue by 'Service Type'?"
+  },
+  {
+    "id": 72,
+    "topic": "Quotes",
+    "difficulty": 1,
+    "persona": "micro_manager",
+    "query": "Can I change the 'Reply-To' email address on my quotes? I want them to go to my office manager, not my personal inbox."
+  },
+  {
+    "id": 73,
+    "topic": "Leads",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "query": "I want to embed the 'Request Form' into a specific page on my website, but I want it to look like my brand, not like a Jobber ad. Can I change the colors?"
+  },
+  {
+    "id": 74,
+    "topic": "App Integrations",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "Can I connect my 'SumUp' card reader to Jobber, or do I have to use the Jobber Card Reader?"
+  },
+  {
+    "id": 75,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I have 'Team Leads' and 'Helpers.' If I assign a job to the 'Team,' does everyone get the notification, or just the person I put first?"
+  },
+  {
+    "id": 76,
+    "topic": "Invoicing & Payments",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I have a 'Late Fee' policy. Can Jobber automatically add a 5% fee if the invoice isn't paid within 15 days, or do I have to manually go in and add a line item?"
+  },
+  {
+    "id": 77,
+    "topic": "Operations",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "My tech is at the house but forgot his password. Can I reset it for him from the field, or does he have to do it through his email?"
+  },
+  {
+    "id": 78,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I want to use 'Variable Tags' in my emails. Can I make it say 'Hey [First Name], thanks for choosing [Company Name]' automatically?"
+  },
+  {
+    "id": 79,
+    "topic": "Finance",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "tier": "grow",
+    "query": "I'm worried about overhead. Does your 'Profitability' report include the time my guys spend driving, or just the time they are clocked into the job?"
+  },
+  {
+    "id": 80,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I just sold a job on the spot. How do I turn this quote into a job immediately without going back to the dashboard?"
+  },
+  {
+    "id": 81,
+    "topic": "Leads",
+    "difficulty": 1,
+    "persona": "micro_manager",
+    "query": "I want to see a log of every phone call my team makes to a lead. Does Jobber track call duration if they dial from the app?"
+  },
+  {
+    "id": 82,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "If I use 'Zapier' to connect to my CRM, does it sync both ways? If I update a phone number in my CRM, does it update in Jobber?"
+  },
+  {
+    "id": 83,
+    "topic": "Scheduling",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "query": "I do HVAC. If I have an emergency 'No Heat' call, how do I see who the closest tech is right now without calling all five of them?"
+  },
+  {
+    "id": 84,
+    "topic": "Invoicing & Payments",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "Is there a 'Bulk Mark as Paid' button? I just got 10 checks in the mail and I don't want to open 10 different screens."
+  },
+  {
+    "id": 85,
+    "topic": "Operations",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I want to track 'Time to Completion.' Can I run a report that shows me which of my techs is taking the longest on a standard 'Oil Change' service?"
+  },
+  {
+    "id": 86,
+    "topic": "Communication",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "If I send a quote via text, does the customer see a link or just a bunch of text? I want it to look professional, not like a scam."
+  },
+  {
+    "id": 87,
+    "topic": "Finance",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I'm looking at my 'Bad Debt.' If I delete an invoice because the guy never paid, does it disappear from my QuickBooks too, or will my books be out of sync?"
+  },
+  {
+    "id": 88,
+    "topic": "Quotes",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "tier": "grow",
+    "query": "I want to set an 'Expiration Date' on my quotes. Can Jobber automatically mark a quote as 'Archived' if they don't sign it within 7 days?"
+  },
+  {
+    "id": 89,
+    "topic": "Leads",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I have a lot of 'Requests' sitting there. Can I select 5 of them and assign them all to my estimator at once?"
+  },
+  {
+    "id": 90,
+    "topic": "App Integrations",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I use 'Broadly' for customer engagement. How does the data bridge work—is it real-time or does it sync once a night?"
+  },
+  {
+    "id": 91,
+    "topic": "Scheduling",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I'm setting up a recurring job. What's the difference between 'Fixed' and 'Monthly on the second Tuesday'? I don't want to mess up my calendar for the year."
+  },
+  {
+    "id": 92,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I have a customer who wants to pay with a physical check but I'm 2 hours away. Does Jobber have a way for them to take a photo of the check, or am I driving out there?"
+  },
+  {
+    "id": 93,
+    "topic": "Operations",
+    "difficulty": 3,
+    "persona": "busy_bee",
+    "query": "I'm running out of storage on my phone because of all the job photos. Does Jobber store them in the cloud, or are they taking up my phone's memory?"
+  },
+  {
+    "id": 94,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I want to see the 'Email History' for a specific client. Can I see exactly when they opened the invoice and from what IP address?"
+  },
+  {
+    "id": 95,
+    "topic": "Finance",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "What is a 'Deposit' vs. a 'Payment'? If I take money before the job starts, where does it show up in my reports?"
+  },
+  {
+    "id": 96,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I want to add a PDF of my insurance certificate to every quote. Do I have to attach it manually every time, or can I set it as a default?"
+  },
+  {
+    "id": 97,
+    "topic": "Leads",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "I'm on the 'Leads' tab. How do I quickly see which leads I haven't called back yet? I don't want anyone falling through the cracks."
+  },
+  {
+    "id": 98,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I use 'Gusto' for payroll. Does Jobber sync the 'Clock In/Out' times directly to Gusto, or do I have to export a CSV first?"
+  },
+  {
+    "id": 99,
+    "topic": "Scheduling",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "tier": "grow",
+    "query": "I want to use 'Automatic Manifests' for my chemical applications. Does Jobber track which batch of fertilizer I used on which house?"
+  },
+  {
+    "id": 100,
+    "topic": "Invoicing & Payments",
+    "difficulty": 1,
+    "persona": "burned_pro",
+    "query": "I'm tired of 'Merchant Fees.' If I use Jobber Payments, is there a hidden 'monthly fee' just to keep my account active?"
+  },
+  {
+    "id": 101,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I have a technician who is always 'forgetting' to hit the Start Timer. Can I manually edit his start time from my phone while he’s still on-site, or do I have to wait until the job is closed?"
+  },
+  {
+    "id": 102,
+    "topic": "Invoicing & Payments",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "tier": "grow",
+    "query": "I want to set up 'Subscription Billing' for my monthly window cleaning. If the customer's card expires, does Jobber automatically stop the service, or do I get an alert to call them?"
+  },
+  {
+    "id": 103,
+    "topic": "Quotes",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "I’m looking at a quote. How do I add a 10% 'Friends and Family' discount without making a whole new line item for it?"
+  },
+  {
+    "id": 104,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I keep getting calls from customers asking when we’re coming. I send the 'On My Way' text, but they say they didn't see it. Is there a way to send it as an email AND a text at the same time?"
+  },
+  {
+    "id": 105,
+    "topic": "Operations",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "tier": "grow",
+    "query": "I need a 'Safety Checklist' that my guys must complete before they can see the client’s address. I don't want them driving until they've confirmed they have their PPE. How do I lock that down?"
+  },
+  {
+    "id": 106,
+    "topic": "Leads",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "If I get a lead through my website, can I make it so they automatically get a 'Thank You' email with my price list attached?"
+  },
+  {
+    "id": 107,
+    "topic": "Finance",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I just ran a 'Refund' on Jobber. Does that money come out of my bank account immediately, or does it just sit as a credit on their account for next time?"
+  },
+  {
+    "id": 108,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I use 'QuickBooks Online.' If I change an address in Jobber because the customer moved, does it fix it in QuickBooks, or am I going to be sending invoices to the wrong house in my accounting software?"
+  },
+  {
+    "id": 109,
+    "topic": "Scheduling",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "query": "I have 'Buffer Time' between jobs. Can I set Jobber to automatically add 15 minutes of travel time to every appointment so my guys aren't always back-to-back?"
+  },
+  {
+    "id": 110,
+    "topic": "Invoicing & Payments",
+    "difficulty": 1,
+    "persona": "micro_manager",
+    "query": "Can I hide the 'Tip' line on my invoices? I think it looks tacky for my high-end consulting business."
+  },
+  {
+    "id": 111,
+    "topic": "Operations",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "My tech is on a job and realized he needs an extra part. Can he add that to the job on his app, or do I have to do it from the office so the invoice stays correct?"
+  },
+  {
+    "id": 112,
+    "topic": "Communication",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "tier": "grow",
+    "query": "I want to use 'Referral Tracking.' If a customer refers a friend, can I tag them in Jobber and give them a credit that automatically applies to their next invoice?"
+  },
+  {
+    "id": 113,
+    "topic": "Finance",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I'm looking at 'Client Spend.' I want to see my top 10 customers by revenue for last year. Is there a specific report for 'Whales'?"
+  },
+  {
+    "id": 114,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "Every time I send a quote, the customer asks for a 'Cash Discount.' Can I put two different totals on one quote—one for card and one for cash?"
+  },
+  {
+    "id": 115,
+    "topic": "Leads",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I have 3 different estimators. Can I set Jobber to 'Round Robin' new leads to them so everyone gets a fair share of the work?"
+  },
+  {
+    "id": 116,
+    "topic": "App Integrations",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I use 'Mailchimp.' Does Jobber send the customer's 'Tag' (like 'VIP' or 'Landscaping') over to Mailchimp so I can send targeted emails?"
+  },
+  {
+    "id": 117,
+    "topic": "Scheduling",
+    "difficulty": 1,
+    "persona": "micro_manager",
+    "query": "I want to see the 'Map View' but I only want to see the jobs assigned to ME, not the whole company. How do I filter the map?"
+  },
+  {
+    "id": 118,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I have a client who wants to pay 5 separate invoices with one credit card transaction. How do I 'Batch' those together so I don't get hit with 5 transaction fees?"
+  },
+  {
+    "id": 119,
+    "topic": "Operations",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "tier": "grow",
+    "query": "I do 'Multi-Day' jobs. If my guy clocks in at 8 AM and out at 4 PM for three days straight, does Jobber show me the total labor cost for the whole project in real-time?"
+  },
+  {
+    "id": 120,
+    "topic": "Communication",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I want to change the 'Subject Line' of my invoice emails. Right now it just says 'Invoice from [Company].' Can I make it say 'Your clean home is ready!'?"
+  },
+  {
+    "id": 121,
+    "topic": "Finance",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "My accountant needs a 'Profit and Loss' statement. Does Jobber do that, or do I have to use QuickBooks for the actual P&L?"
+  },
+  {
+    "id": 122,
+    "topic": "Quotes",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "tier": "grow",
+    "query": "I want to see the 'Conversion Rate' for each of my salespeople. Who is closing the most quotes, and what is the average dollar amount for each?"
+  },
+  {
+    "id": 123,
+    "topic": "Leads",
+    "difficulty": 1,
+    "persona": "burned_pro",
+    "query": "I’m getting leads at 2 AM. Can I set an 'Auto-Reply' text that says 'We're closed, we'll call you at 8 AM,' or does it just sit there until I wake up?"
+  },
+  {
+    "id": 124,
+    "topic": "App Integrations",
+    "difficulty": 3,
+    "persona": "busy_bee",
+    "query": "I use 'Zapier' to send my Jobber leads into a Google Sheet. If I delete a lead in Jobber, does it delete it from the Sheet, or is that a one-way street?"
+  },
+  {
+    "id": 125,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I have a 'Meeting' that isn't a job. Can I block off 2 hours on the calendar for a team lunch so no one accidentally schedules a quote then?"
+  },
+  {
+    "id": 126,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I want to send an invoice to a husband and a wife at the same time. Can I put two email addresses on one 'Client' profile?"
+  },
+  {
+    "id": 127,
+    "topic": "Operations",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "I need to print a 'Work Order' for a tech who doesn't like using the app. Where is the print button for a single job?"
+  },
+  {
+    "id": 128,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "tier": "grow",
+    "query": "I want to use 'Two-Way Texting' to send a video to a client showing them a leak. Can I attach MP4 files in the Jobber messenger?"
+  },
+  {
+    "id": 129,
+    "topic": "Finance",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I see 'Collected' vs 'Banked.' What’s the difference? I just want to know how much cash is actually in my pocket today."
+  },
+  {
+    "id": 130,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "A client wants a quote for 'Weekly' vs 'Bi-Weekly' service. Can I show both options on one quote so they can just click the one they want?"
+  },
+  {
+    "id": 131,
+    "topic": "Leads",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I want to track 'Lead-to-Quote' time. How long does it take my team to respond to a web request? Is there a report for 'Response Speed'?"
+  },
+  {
+    "id": 132,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "If I connect 'Stripe' instead of 'Jobber Payments,' do I still get the same reporting inside the Jobber dashboard, or is it all hidden in Stripe?"
+  },
+  {
+    "id": 133,
+    "topic": "Scheduling",
+    "difficulty": 3,
+    "persona": "busy_bee",
+    "query": "I have 5 trucks. If one breaks down, can I select all of its jobs for the day and 'Reassign' them to the other 4 trucks in one go?"
+  },
+  {
+    "id": 134,
+    "topic": "Invoicing & Payments",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "Does Jobber work with Apple Pay? All my younger clients keep asking if they can just tap their phone."
+  },
+  {
+    "id": 135,
+    "topic": "Operations",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I want to see 'Audit Logs' for my inventory. If a tech says we're out of 'Part A,' I want to see who used the last one and when."
+  },
+  {
+    "id": 136,
+    "topic": "Communication",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "query": "I’m worried about 'No-Shows.' Can I set a reminder that texts the customer 1 hour before the tech arrives, not just 24 hours?"
+  },
+  {
+    "id": 137,
+    "topic": "Finance",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I need to export my 'Expenses' for the year. I've been snapping photos of receipts in Jobber—does it export the actual images or just the data?"
+  },
+  {
+    "id": 138,
+    "topic": "Quotes",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "Can I add a 'YouTube' link to my quote to show a demo of the product I'm installing? I want it to be clickable for the client."
+  },
+  {
+    "id": 139,
+    "topic": "Leads",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I want to customize the 'Lead Form' so that it asks for the square footage of their house. Can I add 'Custom Fields' to the web request?"
+  },
+  {
+    "id": 140,
+    "topic": "App Integrations",
+    "difficulty": 1,
+    "persona": "burned_pro",
+    "query": "I use 'Google Reviews.' Does Jobber automatically send the link when the invoice is paid, or do I have to do it manually every time?"
+  },
+  {
+    "id": 141,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I’m looking at the 'Grid View.' Can I hide the techs who aren't working today so I have more room on my screen?"
+  },
+  {
+    "id": 142,
+    "topic": "Invoicing & Payments",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I have a client who overpaid by $50. How do I keep that as a 'Credit' on their account so it automatically deducts from their next bill?"
+  },
+  {
+    "id": 143,
+    "topic": "Operations",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "What happens if my tech loses internet connection in a basement? Can he still clock out and take photos in the app?"
+  },
+  {
+    "id": 144,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I want to send a mass text to all my Tuesday clients because of a storm. Can I filter my 'Client List' by 'Next Visit Date'?"
+  },
+  {
+    "id": 145,
+    "topic": "Finance",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "tier": "grow",
+    "query": "I need to track 'Equipment Depreciation.' Can I add my trucks as 'Assets' in Jobber and track their maintenance costs against the revenue they generate?"
+  },
+  {
+    "id": 146,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I want my quotes to have a 'Professional' look. Can I change the font and the layout, or am I stuck with the standard Jobber template?"
+  },
+  {
+    "id": 147,
+    "topic": "Leads",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I saw 'Lead Sources.' Can I manually type in 'Met at Home Depot' or do I have to pick from a list you made?"
+  },
+  {
+    "id": 148,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I use 'LSA' (Google Local Services Ads). If I get a lead there, does it pop into Jobber automatically or do I have to copy/paste it?"
+  },
+  {
+    "id": 149,
+    "topic": "Scheduling",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I want to see a 'Heat Map' of where most of my jobs are. Does Jobber show me which neighborhoods I'm most active in so I can plan my marketing?"
+  },
+  {
+    "id": 150,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "If a customer disputes a charge, does Jobber help me fight it, or am I on my own with the bank?"
+  },
+  {
+    "id": 151,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I have a 'floating' job that needs to happen sometime this week, but I don't care when. How do I put it on the calendar without picking a specific day so I can just slot it in when we have a gap?"
+  },
+  {
+    "id": 152,
+    "topic": "Invoicing & Payments",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "tier": "grow",
+    "query": "I do commercial work. They pay on 'Net 60' terms. Can I set up the invoice to not show as 'Overdue' until 60 days have passed, or is it going to nag them every week?"
+  },
+  {
+    "id": 153,
+    "topic": "Operations",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I accidentally deleted a job. Is there an 'Undo' button, or did I just lose all those notes and photos forever?"
+  },
+  {
+    "id": 154,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I want to send a mass email, but I want to exclude anyone who has an open quote. I don't want to offer a discount to people I'm already negotiating with. How do I filter them out?"
+  },
+  {
+    "id": 155,
+    "topic": "Finance",
+    "difficulty": 3,
+    "persona": "busy_bee",
+    "query": "I'm applying for a loan and need to show my 'Year-over-Year' growth. Which report gives me a quick comparison of this February vs. last February?"
+  },
+  {
+    "id": 156,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "If I send a quote and the customer 'Archives' it, do I get a notification? I want to know the second they decide not to go with us so I can call and ask why."
+  },
+  {
+    "id": 157,
+    "topic": "Leads",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I saw 'Client Hub.' Can a brand new lead log in there to request work, or do they have to be an actual customer first?"
+  },
+  {
+    "id": 158,
+    "topic": "App Integrations",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I use 'FleetSharp.' Can I set an alert in Jobber if a tech is idling their truck for more than 15 minutes at a job site?"
+  },
+  {
+    "id": 159,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I have a job that needs two different visits—one for prep and one for the actual work. How do I link them so they stay together on the schedule?"
+  },
+  {
+    "id": 160,
+    "topic": "Invoicing & Payments",
+    "difficulty": 1,
+    "persona": "burned_pro",
+    "query": "I take a lot of cash. If I record a cash payment, does Jobber take a percentage of that as a 'platform fee' or is that only for credit cards?"
+  },
+  {
+    "id": 161,
+    "topic": "Operations",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "tier": "grow",
+    "query": "I want to track 'Material Waste.' Can I add a field to my Job Forms where techs enter how much product was left over, and can I report on that by tech?"
+  },
+  {
+    "id": 162,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I want my 'On My Way' text to include a link to my technician's bio and photo so the customer feels safe. How do I customize that message?"
+  },
+  {
+    "id": 163,
+    "topic": "Finance",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "My bank statement says 'Jobber Pay' but the amount doesn't match any single invoice. How do I figure out which invoices were included in that one deposit?"
+  },
+  {
+    "id": 164,
+    "topic": "Quotes",
+    "difficulty": 1,
+    "persona": "micro_manager",
+    "query": "Can I see which of my employees created a quote? I need to know who to talk to if the pricing is wrong."
+  },
+  {
+    "id": 165,
+    "topic": "Leads",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "query": "I'm buying leads from a third party. If I import them, can Jobber automatically flag any duplicates so I don't pay for the same lead twice?"
+  },
+  {
+    "id": 166,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I use 'Zapier' to connect to my smart lightbulbs. Can I make my office lights turn green every time a quote is approved? (I'm serious, I love this stuff!)"
+  },
+  {
+    "id": 167,
+    "topic": "Scheduling",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "I'm looking at the calendar on my phone. How do I switch from 'List View' to 'Map View' so I can see where my next job is?"
+  },
+  {
+    "id": 168,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "If I use 'Automatic Invoice Reminders,' what time of day do they go out? I want them to hit the customer's inbox at 9 AM sharp, not at midnight."
+  },
+  {
+    "id": 169,
+    "topic": "Operations",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "query": "My guys are 'ghost clocking'—starting the timer before they even get out of the truck. Is there a way to see their GPS location at the exact moment they hit 'Start'?"
+  },
+  {
+    "id": 170,
+    "topic": "Communication",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "A customer called and said they 'unsubscribed' by accident. How do I opt them back in so they can get their invoices again?"
+  },
+  {
+    "id": 171,
+    "topic": "Finance",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "tier": "grow",
+    "query": "I want to calculate my 'Customer Acquisition Cost.' Can Jobber tell me how much revenue I generated from people who came through my 'Spring Sale' lead source?"
+  },
+  {
+    "id": 172,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I want to add a 'Video Greeting' to my Client Hub so when they look at a quote, they see a video of me explaining the work. Is that possible?"
+  },
+  {
+    "id": 173,
+    "topic": "Leads",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I have 50 new leads. Can I 'Bulk Archive' the ones that haven't responded in 30 days so my dashboard isn't so messy?"
+  },
+  {
+    "id": 174,
+    "topic": "App Integrations",
+    "difficulty": 1,
+    "persona": "burned_pro",
+    "query": "I use 'QuickBooks.' If I mark an invoice as 'Paid' in QuickBooks, does it sync back to Jobber, or is it only a one-way street from Jobber to QB?"
+  },
+  {
+    "id": 175,
+    "topic": "Scheduling",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I have a job that requires a specific permit. Can I set a 'Dependency' so the job can't be scheduled until the 'Permit Received' task is checked off?"
+  },
+  {
+    "id": 176,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I want to offer 'Buy Now, Pay Later' like Affirm or Klarna. Does Jobber Payments have a way for customers to do monthly installments for big jobs?"
+  },
+  {
+    "id": 177,
+    "topic": "Operations",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "I'm in a dead zone with no cell service. If I finish a job and hit 'Complete,' will it update whenever I get back to a signal?"
+  },
+  {
+    "id": 178,
+    "topic": "Communication",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "tier": "grow",
+    "query": "I want to send a text to every customer who had a 'Tree Trimming' service last year to remind them it's time for a prune. How do I find that specific list?"
+  },
+  {
+    "id": 179,
+    "topic": "Finance",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I found a mistake in my 'Tax' settings from three months ago. If I fix it now, will it update all my old invoices, or just the new ones?"
+  },
+  {
+    "id": 180,
+    "topic": "Quotes",
+    "difficulty": 3,
+    "persona": "busy_bee",
+    "query": "What's my 'Close Rate' for this month? I need to know if I need to spend more on ads or if my sales team is just slacking."
+  },
+  {
+    "id": 181,
+    "topic": "Leads",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "If I use the 'Request Form,' can I block specific IP addresses or email domains? I'm getting a lot of spam from 'competitors' just checking my prices."
+  },
+  {
+    "id": 182,
+    "topic": "App Integrations",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "query": "I want to use 'CompanyCam' to create a 'Before/After' gallery on my website. Does Jobber send the photos back to CompanyCam after the tech uploads them?"
+  },
+  {
+    "id": 183,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I want to see my team's 'Utilization Rate.' How many hours are they actually working vs. how many hours are they just 'Available' on the clock?"
+  },
+  {
+    "id": 184,
+    "topic": "Invoicing & Payments",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "I have a customer who wants to pay with two different credit cards for one invoice. Can I process two separate card payments on one bill?"
+  },
+  {
+    "id": 185,
+    "topic": "Operations",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I have a 10-step 'Safety Protocol.' If a tech skips step 4, do I get an alert, or do I have to manually check every job form every night?"
+  },
+  {
+    "id": 186,
+    "topic": "Communication",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I love emojis! Can I put a 'Sparkles' emoji in my automated text messages, or will it show up as a weird block on the customer's phone?"
+  },
+  {
+    "id": 187,
+    "topic": "Finance",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I'm looking at 'Gross Margin' by service. Why does my 'Mowing' service show a higher margin than my 'Irrigation' when the parts for irrigation are so expensive?"
+  },
+  {
+    "id": 188,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "Can I set a 'Quote Follow-up' to happen after 2 days, but ONLY if the quote is over $1,000? I don't want to chase the small stuff."
+  },
+  {
+    "id": 189,
+    "topic": "Leads",
+    "difficulty": 1,
+    "persona": "micro_manager",
+    "query": "If I add a lead manually, can I see who added it and when? I need to track which office staff member is the most productive."
+  },
+  {
+    "id": 190,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I use 'Thumbtack.' If I connect it to Jobber, do I still have to pay Thumbtack the 'lead fee' or does Jobber handle the billing for both?"
+  },
+  {
+    "id": 191,
+    "topic": "Scheduling",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "query": "I want to use 'AI' to predict how long a job will take based on the square footage. Does Jobber have an 'Auto-Estimate' duration feature?"
+  },
+  {
+    "id": 192,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I sent an invoice but the customer says the total is wrong. If I edit the invoice now, does the old link they have still work or do I need to re-send it?"
+  },
+  {
+    "id": 193,
+    "topic": "Operations",
+    "difficulty": 1,
+    "persona": "micro_manager",
+    "query": "I want to see a list of every 'Internal Note' made today. I'm worried my techs are saying things about clients they shouldn't be."
+  },
+  {
+    "id": 194,
+    "topic": "Communication",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "query": "I want to set up a 'VIP' phone number that bypasses the automated system. Can I tag specific clients so their calls get routed differently?"
+  },
+  {
+    "id": 195,
+    "topic": "Finance",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I want to give my techs a 'Bonus' based on the tips they get. Does Jobber show me a report of tips broken down by technician?"
+  },
+  {
+    "id": 196,
+    "topic": "Quotes",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "I accidentally deleted a quote I spent an hour on. Is there a 'Trash' bin I can pull it out of, or is it gone?"
+  },
+  {
+    "id": 197,
+    "topic": "Leads",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I want to see a 'Funnel Report.' How many people clicked my ad, filled out the lead form, got a quote, and then actually paid? Where is that data?"
+  },
+  {
+    "id": 198,
+    "topic": "App Integrations",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "If I use 'Mailchimp,' can I make it so that if a customer leaves a 1-star review on Google, they get removed from my marketing list?"
+  },
+  {
+    "id": 199,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I have a 'No-Show' policy where I charge $50. If I mark a job as 'Canceled,' can I automatically trigger an invoice for that fee?"
+  },
+  {
+    "id": 200,
+    "topic": "Invoicing & Payments",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "tier": "grow",
+    "query": "I want to see my 'Average Days to Pay' by technician. I think one of my guys is better at getting clients to pay on-site than the others."
+  },
+  {
+    "id": 201,
+    "topic": "Scheduling",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I have 10 techs but only 5 ladders. Can I track 'Equipment' as a resource in Jobber so I don't accidentally schedule 6 jobs that require a ladder at the same time?"
+  },
+  {
+    "id": 202,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I have a client who wants to pay with a physical check but they want me to scan it. Does the Jobber mobile app have a 'check capture' feature like my banking app?"
+  },
+  {
+    "id": 203,
+    "topic": "Communication",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I want to put a 'Book Now' link in my Instagram bio. Does that link go straight to my calendar or do they have to fill out a request form first?"
+  },
+  {
+    "id": 204,
+    "topic": "Operations",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "tier": "grow",
+    "query": "I'm using 'Job Forms.' If my tech finds a safety hazard, can that form automatically trigger an 'Alert' email to me immediately so I can pull them off the job?"
+  },
+  {
+    "id": 205,
+    "topic": "Finance",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I'm looking at 'Sales Tax.' If I have a tax-exempt customer (like a non-profit), how do I mark them so they never get charged tax on any invoice?"
+  },
+  {
+    "id": 206,
+    "topic": "Quotes",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "Can I see if a customer has looked at a quote more than once? If they've opened it 5 times today, I want to call them while they're thinking about it."
+  },
+  {
+    "id": 207,
+    "topic": "Leads",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "query": "I want to run a contest. Can I track which lead came from my 'QR Code' on my truck vs. my 'QR Code' on my business cards?"
+  },
+  {
+    "id": 208,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I use 'QuickBooks Online.' If I delete a payment in Jobber because the check bounced, does it delete the payment in QuickBooks too, or do I have to fix it in both?"
+  },
+  {
+    "id": 209,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I'm on the 'Waitlist.' How do I quickly see which jobs on the waitlist are closest to where I am right now so I can fill a gap in my day?"
+  },
+  {
+    "id": 210,
+    "topic": "Invoicing & Payments",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I want to charge a 'Fuel Surcharge' on every invoice automatically based on the mileage driven to the job. Can Jobber calculate that for me?"
+  },
+  {
+    "id": 211,
+    "topic": "Operations",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "My tech says his 'Map' isn't working. Is there a way for me to 'Ping' his location from the dashboard to see if his phone's GPS is even on?"
+  },
+  {
+    "id": 212,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "tier": "grow",
+    "query": "I want to use 'Two-Way Texting' to handle complaints. Is there a way to 'Close' a text thread so it's archived once the issue is resolved?"
+  },
+  {
+    "id": 213,
+    "topic": "Finance",
+    "difficulty": 3,
+    "persona": "busy_bee",
+    "query": "I need to know my 'Monthly Recurring Revenue' (MRR). Which report shows me exactly how much guaranteed money I have coming in from contracts next month?"
+  },
+  {
+    "id": 214,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "Can I add a 'Required Attachment' to a quote? I want the customer to have to upload a photo of their circuit breaker before they can accept the quote."
+  },
+  {
+    "id": 215,
+    "topic": "Leads",
+    "difficulty": 1,
+    "persona": "burned_pro",
+    "query": "If I 'Decline' a lead because I'm too busy, does Jobber send them a polite email, or do I just look like I'm ignoring them?"
+  },
+  {
+    "id": 216,
+    "topic": "App Integrations",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "query": "I want to connect Jobber to my 'Smart Home' hub. Can I make my office coffee maker start brewing whenever a technician clocks into their first job of the day?"
+  },
+  {
+    "id": 217,
+    "topic": "Scheduling",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "How do I print a 'Daily Schedule' for my crew? They prefer having a piece of paper on the dashboard of the truck."
+  },
+  {
+    "id": 218,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I noticed an invoice was 'Edited' after it was paid. Can I see a version history to see what was changed and who changed it?"
+  },
+  {
+    "id": 219,
+    "topic": "Operations",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "query": "I have a 'No-Compete' agreement with my techs. Can I block them from seeing the customer's phone number so they can't steal my clients on the side?"
+  },
+  {
+    "id": 220,
+    "topic": "Communication",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "Can I change the 'Notification Sound' on my phone for Jobber alerts? I want it to sound like a cash register whenever I get a new lead!"
+  },
+  {
+    "id": 221,
+    "topic": "Finance",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I need to pay my sales tax by the end of the day. Does Jobber tell me exactly what I *owe* or just what I *collected*?"
+  },
+  {
+    "id": 222,
+    "topic": "Quotes",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "tier": "grow",
+    "query": "I want to track 'Quote Revisions.' If I send 3 different versions of a quote, can I see which version the customer actually liked best?"
+  },
+  {
+    "id": 223,
+    "topic": "Leads",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I'm getting 'Ghost Leads'—people who fill out the form with fake numbers. Can Jobber verify the phone number is real before it lets them submit the form?"
+  },
+  {
+    "id": 224,
+    "topic": "App Integrations",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "If I connect 'Google Calendar,' can I make it so that my 'Personal' events show up as 'Busy' blocks on my Jobber schedule so my staff doesn't book over them?"
+  },
+  {
+    "id": 225,
+    "topic": "Scheduling",
+    "difficulty": 3,
+    "persona": "tech_rookie",
+    "query": "I want to use 'Geofencing' to automatically clock my guys in when they pull into the driveway. Does Jobber do that, or do they still have to tap a button?"
+  },
+  {
+    "id": 226,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I have a client who wants an 'Itemized' invoice but I only want to show them the 'Total' price. How do I hide the individual line item costs?"
+  },
+  {
+    "id": 227,
+    "topic": "Operations",
+    "difficulty": 1,
+    "persona": "burned_pro",
+    "query": "If I delete an employee who quit, what happens to all the photos and notes they uploaded? Do they disappear with the user account?"
+  },
+  {
+    "id": 228,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "Can I set a 'Do Not Disturb' time for my Jobber number so I don't get 'Two-Way Text' notifications after 7 PM?"
+  },
+  {
+    "id": 229,
+    "topic": "Finance",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I want to see 'Profitability per Zip Code.' I think I'm spending too much on gas to get to the north side of town. Where is that report?"
+  },
+  {
+    "id": 230,
+    "topic": "Quotes",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "How do I add a 'Signature' box to my quotes? I want them to sign it with their finger on my iPad right there in the living room."
+  },
+  {
+    "id": 231,
+    "topic": "Leads",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I have a list of old customers I want to 'Re-Activate.' Can I import them as 'Leads' so I can track my outreach progress without making them 'Active' clients again?"
+  },
+  {
+    "id": 232,
+    "topic": "App Integrations",
+    "difficulty": 3,
+    "persona": "busy_bee",
+    "query": "I use 'QuickBooks.' If I have a 'Credit' in QuickBooks for a customer, does it show up in Jobber so I know they have a balance to use?"
+  },
+  {
+    "id": 233,
+    "topic": "Scheduling",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I want to see 'Travel Time' on the calendar. Is there a way to show the drive time between Job A and Job B so I know if my guys are lollygagging?"
+  },
+  {
+    "id": 234,
+    "topic": "Invoicing & Payments",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "Can I take a payment through 'Venmo' and record it in Jobber, or do I have to use 'Jobber Payments' for everything?"
+  },
+  {
+    "id": 235,
+    "topic": "Operations",
+    "difficulty": 3,
+    "persona": "burned_pro",
+    "tier": "grow",
+    "query": "I have a 'Chemical Tracking' requirement for the state. Can Jobber generate a report showing every time a specific 'Line Item' (like a pesticide) was used?"
+  },
+  {
+    "id": 236,
+    "topic": "Communication",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I sent a 'Review Request' and the customer gave me a 5-star review. Does Jobber show that review on my dashboard, or do I have to go to Google to see it?"
+  },
+  {
+    "id": 237,
+    "topic": "Finance",
+    "difficulty": 1,
+    "persona": "micro_manager",
+    "query": "What's the difference between 'Invoiced Sales' and 'Collected Revenue'? My accountant says these are very different things and I'm confused."
+  },
+  {
+    "id": 238,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I want to make my quotes look 'Fun.' Can I add a background image or a 'Welcome' video to the Client Hub page where they see the quote?"
+  },
+  {
+    "id": 239,
+    "topic": "Leads",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I want to track 'Employee Sales Performance.' Who is converting the most leads into actual jobs, and what is their 'Close Ratio'?"
+  },
+  {
+    "id": 240,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I use 'Broadly.' If I send a review request through Jobber, will it conflict with the one Broadly sends, or do they talk to each other?"
+  },
+  {
+    "id": 241,
+    "topic": "Scheduling",
+    "difficulty": 1,
+    "persona": "busy_bee",
+    "query": "I'm looking at my 'Week View.' Can I change the start of the week to Monday instead of Sunday? It makes more sense for my business."
+  },
+  {
+    "id": 242,
+    "topic": "Invoicing & Payments",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I have a customer who wants to pay 'Retainer' upfront. How do I record a $2,000 payment that isn't attached to an invoice yet?"
+  },
+  {
+    "id": 243,
+    "topic": "Operations",
+    "difficulty": 2,
+    "persona": "tech_rookie",
+    "query": "I want to use 'QR Codes' on my equipment so my techs can scan it and see the 'Owner's Manual.' Can I store a PDF manual on a Jobber 'Asset'?"
+  },
+  {
+    "id": 244,
+    "topic": "Communication",
+    "difficulty": 1,
+    "persona": "burned_pro",
+    "query": "A customer is harassing my office staff through the Jobber messenger. Can I 'Block' their number so they can't text us anymore?"
+  },
+  {
+    "id": 245,
+    "topic": "Finance",
+    "difficulty": 3,
+    "persona": "busy_bee",
+    "query": "I need a 'Cash Flow Forecast' for the next 90 days. Does Jobber show me my expected revenue based on upcoming recurring jobs?"
+  },
+  {
+    "id": 246,
+    "topic": "Quotes",
+    "difficulty": 2,
+    "persona": "micro_manager",
+    "query": "I want to add a 'Disclaimer' that only appears on quotes for 'Electrical Work' and not for 'Plumbing.' How do I set up conditional text?"
+  },
+  {
+    "id": 247,
+    "topic": "Leads",
+    "difficulty": 1,
+    "persona": "tech_rookie",
+    "query": "I saw 'Public Grid.' Can I make my real-time calendar public so people can see when I'm busy and when I'm free before they call?"
+  },
+  {
+    "id": 248,
+    "topic": "App Integrations",
+    "difficulty": 2,
+    "persona": "burned_pro",
+    "query": "I use 'Zapier' to connect to my CRM. If I move a job in Jobber, does it update the 'Appointment Time' in my CRM automatically?"
+  },
+  {
+    "id": 249,
+    "topic": "Scheduling",
+    "difficulty": 3,
+    "persona": "micro_manager",
+    "query": "I want to see 'Route Density.' Which of my service areas has the most jobs per square mile so I can target my door-hangers better?"
+  },
+  {
+    "id": 250,
+    "topic": "Invoicing & Payments",
+    "difficulty": 2,
+    "persona": "busy_bee",
+    "query": "I'm ready to close out my year. How do I send a 'Statement' to a client that shows every single thing they paid for in 2025?"
   }
 ]

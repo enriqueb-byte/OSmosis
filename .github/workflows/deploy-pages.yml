@@ -1,4 +1,4 @@
-# Build and deploy OSmosis to GitHub Pages on every push to main
+# Build and deploy Call Gym to GitHub Pages on every push to main
 
 name: Deploy to GitHub Pages
 

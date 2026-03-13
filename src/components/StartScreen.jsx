@@ -1,8 +1,7 @@
 import { useState, useCallback, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  PILLARS,
-  PLAN_TIERS,
+  TOPICS,
   DIFFICULTIES,
   PERSONAS,
   scenarioMatchesFilters,
@@ -26,8 +25,7 @@ const DEFAULT_SETTINGS = {
   responseMode: RESPONSE_TYPE,
   scenarioCount: 10,
   timerSeconds: 60,
-  pillar: [],
-  planTier: [],
+  topic: [],
   difficulty: [],
   persona: [],
 }
@@ -37,7 +35,7 @@ function FilterChip({ label, selected, onToggle }) {
     <button
       type="button"
       onClick={onToggle}
-      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[#003063] focus:ring-offset-2 focus:ring-offset-white ${
+      className={`min-h-[44px] px-3 py-2.5 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[#003063] focus:ring-offset-2 focus:ring-offset-white ${
         selected
           ? 'bg-[#003063] text-white shadow-md shadow-[0_4px_14px_rgba(0,48,99,0.25)]'
           : 'bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-800 border border-slate-200 shadow-sm'
@@ -58,7 +56,7 @@ function CollapsibleFilterSection({ title, description, options, selected, onTog
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between px-3 py-2.5 text-left hover:bg-slate-50 transition-colors focus:outline-none focus:ring-1 focus:ring-[#003063] focus:ring-inset rounded-lg"
+        className="w-full min-h-[44px] flex items-center justify-between px-3 py-2.5 text-left hover:bg-slate-50 transition-colors focus:outline-none focus:ring-1 focus:ring-[#003063] focus:ring-inset rounded-lg"
       >
         <span className="text-slate-700 font-medium text-sm">{title}</span>
         {summary && <span className="text-slate-500 text-xs mr-2">{summary}</span>}
@@ -119,37 +117,58 @@ function NumberInput({ value, onChange, min, max, className = '' }) {
   )
 }
 
-function TimeOptionRow({ seconds, onSecondsChange }) {
-  return (
-    <div className="flex items-center justify-between gap-3 flex-wrap">
-      <span className="text-slate-600 text-sm">Time per question</span>
-      <div className="flex items-center gap-1.5">
-        <NumberInput
-          value={seconds}
-          onChange={onSecondsChange}
-          min={TIMER_SEC_MIN}
-          max={TIMER_SEC_MAX}
-        />
-        <span className="text-slate-600 text-sm">sec</span>
-      </div>
-    </div>
-  )
-}
-
 export default function StartScreen({ maxQuestions = 50, onStart }) {
   const [showHowItWorks, setShowHowItWorks] = useState(false)
+  const [showUnderTheHood, setShowUnderTheHood] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [savedTranscripts, setSavedTranscripts] = useState([])
   const [savedTranscriptsOpen, setSavedTranscriptsOpen] = useState(false)
   const [copiedIndex, setCopiedIndex] = useState(null)
-  const [pillar, setPillar] = useState(DEFAULT_SETTINGS.pillar)
-  const [planTier, setPlanTier] = useState(DEFAULT_SETTINGS.planTier)
+  const [topic, setTopic] = useState(DEFAULT_SETTINGS.topic)
   const [difficulty, setDifficulty] = useState(DEFAULT_SETTINGS.difficulty)
   const [persona, setPersona] = useState(DEFAULT_SETTINGS.persona)
   const [scenarioCount, setScenarioCount] = useState(DEFAULT_SETTINGS.scenarioCount)
   const [timerSeconds, setTimerSeconds] = useState(DEFAULT_SETTINGS.timerSeconds)
   const [mode, setMode] = useState(DEFAULT_SETTINGS.mode)
   const [responseMode, setResponseMode] = useState(DEFAULT_SETTINGS.responseMode)
+  const [activeMicLabel, setActiveMicLabel] = useState(null)
+
+  const refreshActiveMic = useCallback(() => {
+    if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
+      setActiveMicLabel(null)
+      return
+    }
+    setActiveMicLabel(null)
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then((stream) => {
+        const track = stream.getAudioTracks()[0]
+        if (!track) {
+          stream.getTracks().forEach((t) => t.stop())
+          return
+        }
+        const deviceId = track.getSettings().deviceId
+        stream.getTracks().forEach((t) => t.stop())
+        if (!deviceId) {
+          setActiveMicLabel(track.label || 'Default microphone')
+          return
+        }
+        navigator.mediaDevices.enumerateDevices()
+          .then((devices) => {
+            const audio = devices.find((d) => d.kind === 'audioinput' && d.deviceId === deviceId)
+            setActiveMicLabel(audio?.label || track.label || 'Default microphone')
+          })
+          .catch(() => setActiveMicLabel(track.label || 'Default microphone'))
+      })
+      .catch(() => setActiveMicLabel('(microphone access denied)'))
+  }, [])
+
+  useEffect(() => {
+    if (responseMode !== RESPONSE_VOICE) {
+      setActiveMicLabel(null)
+      return
+    }
+    refreshActiveMic()
+  }, [responseMode, refreshActiveMic])
 
   useEffect(() => {
     if (scenarioCount > maxQuestions) {
@@ -163,8 +182,11 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
       if (raw) {
         const s = JSON.parse(raw)
         if (s && typeof s === 'object') {
-          if (Array.isArray(s.pillar)) setPillar(s.pillar)
-          if (Array.isArray(s.planTier)) setPlanTier(s.planTier)
+          if (Array.isArray(s.topic)) setTopic(s.topic)
+          else if (Array.isArray(s.pillar)) {
+            const numToTopic = { 1: 'Leads', 2: 'Quotes', 3: 'Scheduling', 4: 'Operations', 5: 'Communication', 6: 'Invoicing & Payments', 7: 'Finance', 8: 'App Integrations' }
+            setTopic(s.pillar.map((n) => numToTopic[n]).filter(Boolean))
+          }
           if (Array.isArray(s.difficulty)) setDifficulty(s.difficulty)
           if (Array.isArray(s.persona)) setPersona(s.persona)
           if (typeof s.scenarioCount === 'number' && s.scenarioCount >= SCENARIO_COUNT_MIN) {
@@ -184,8 +206,7 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
   const handleResetToDefaults = useCallback(() => {
     setMode(DEFAULT_SETTINGS.mode)
     setResponseMode(DEFAULT_SETTINGS.responseMode)
-    setPillar(DEFAULT_SETTINGS.pillar)
-    setPlanTier(DEFAULT_SETTINGS.planTier)
+    setTopic(DEFAULT_SETTINGS.topic)
     setDifficulty(DEFAULT_SETTINGS.difficulty)
     setPersona(DEFAULT_SETTINGS.persona)
     setScenarioCount(DEFAULT_SETTINGS.scenarioCount)
@@ -193,6 +214,12 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
     try {
       localStorage.removeItem(SESSION_SETTINGS_KEY)
     } catch (_) {}
+  }, [])
+
+  const handleResetFilters = useCallback(() => {
+    setTopic(DEFAULT_SETTINGS.topic)
+    setDifficulty(DEFAULT_SETTINGS.difficulty)
+    setPersona(DEFAULT_SETTINGS.persona)
   }, [])
 
   useEffect(() => {
@@ -218,12 +245,12 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
   const effectiveTimerSeconds = Math.max(TIMER_SEC_MIN, Math.min(TIMER_SEC_MAX, timerSeconds))
 
   const filteredScenarioCount = useMemo(() => {
-    const hasFilters = pillar.length || planTier.length || difficulty.length || persona.length
+    const hasFilters = topic.length || difficulty.length || persona.length
     if (!hasFilters) return scenariosData.length
     return scenariosData.filter((s) =>
-      scenarioMatchesFilters(s, { pillar, tier: planTier, difficulty, persona })
+      scenarioMatchesFilters(s, { topic, difficulty, persona })
     ).length
-  }, [pillar, planTier, difficulty, persona])
+  }, [topic, difficulty, persona])
 
   const showFilterWarning = mode === MODE_PRACTICE && scenarioCount > filteredScenarioCount
 
@@ -243,26 +270,24 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
         responseMode,
         scenarioCount,
         timerSeconds,
-        pillar: [...pillar],
-        planTier: [...planTier],
+        topic: [...topic],
         difficulty: [...difficulty],
         persona: [...persona],
       }))
     } catch (_) {}
-    const hasAny = pillar.length || planTier.length || difficulty.length || persona.length
+    const hasAny = topic.length || difficulty.length || persona.length
     const count = Math.max(SCENARIO_COUNT_MIN, Math.min(maxQuestions, scenarioCount))
     onStart(
       hasAny
         ? {
-            pillar: [...pillar],
-            tier: [...planTier],
+            topic: [...topic],
             difficulty: [...difficulty],
             persona: [...persona],
           }
         : null,
       { scenarioCount: count, timerSeconds: effectiveTimerSeconds, responseMode, sessionMode: 'practice' }
     )
-  }, [mode, responseMode, onStart, pillar, planTier, difficulty, persona, scenarioCount, effectiveTimerSeconds, maxQuestions])
+  }, [mode, responseMode, onStart, topic, difficulty, persona, scenarioCount, effectiveTimerSeconds, maxQuestions])
 
   return (
     <motion.div
@@ -309,12 +334,22 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
                   <button
                     type="button"
                     onClick={() => {
-                      handleResetToDefaults()
                       setSettingsOpen(false)
+                      setShowHowItWorks(true)
                     }}
                     className="w-full px-3 py-2.5 text-left text-slate-600 text-sm hover:bg-slate-50 transition-colors"
                   >
-                    Reset to defaults
+                    How it works
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSettingsOpen(false)
+                      setShowUnderTheHood(true)
+                    }}
+                    className="w-full px-3 py-2.5 text-left text-slate-600 text-sm hover:bg-slate-50 transition-colors"
+                  >
+                    Under the hood
                   </button>
                   {savedTranscripts.length > 0 && (
                     <div className="border-t border-slate-100">
@@ -378,115 +413,121 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
         <div className="flex justify-center -mb-2">
           <img
             src={`${import.meta.env.BASE_URL}call-gym-logo.png`}
-            alt="The Call Gym"
+            alt="Call Gym"
             className="h-24 w-auto md:h-28 block"
           />
         </div>
-        <div className="flex items-center justify-center gap-2 mb-1">
-          <h1 className="font-sans text-2xl md:text-3xl font-semibold text-slate-800 text-center">
-            The Call Gym
-          </h1>
-          <button
-            type="button"
-            onClick={() => setShowHowItWorks(true)}
-            className="shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors focus:outline-none focus:ring-1 focus:ring-[#003063] focus:ring-offset-1 focus:ring-offset-white text-sm font-medium"
-            title="How it works"
-            aria-label="How it works"
-          >
-            ?
-          </button>
-        </div>
+        <h1 className="font-sans text-2xl md:text-3xl font-semibold text-slate-800 text-center mb-1">
+          Call Gym
+        </h1>
         <p className="text-slate-600 text-sm md:text-base mb-5 text-center">
-          Put in reps. Fail forward. Nail Kick-Offs
+          Put in reps. Fail-forward. Crush your calls.
         </p>
 
-        <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 mb-5 text-left">
-          {/* Style + Response on one line, centered */}
-          <div className="flex justify-center flex-wrap items-center gap-x-4 gap-y-2 py-4">
-            <div className="flex items-center gap-2">
-              <span className="text-slate-500 text-sm">Style:</span>
-              <FilterChip
-                label="Practice"
-                selected={mode === MODE_PRACTICE}
-                onToggle={() => setMode(MODE_PRACTICE)}
-              />
-              <FilterChip
-                label="Assessment"
-                selected={mode === MODE_ASSESSMENT}
-                onToggle={() => setMode(MODE_ASSESSMENT)}
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-slate-500 text-sm">Response:</span>
-              <FilterChip
-                label="Type"
-                selected={responseMode === RESPONSE_TYPE}
-                onToggle={() => setResponseMode(RESPONSE_TYPE)}
-              />
-              <FilterChip
-                label="Voice"
-                selected={responseMode === RESPONSE_VOICE}
-                onToggle={() => setResponseMode(RESPONSE_VOICE)}
-              />
-            </div>
+        <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 mb-5 text-left space-y-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-slate-500 text-sm w-16 shrink-0">Style</span>
+            <FilterChip
+              label="Practice"
+              selected={mode === MODE_PRACTICE}
+              onToggle={() => setMode(MODE_PRACTICE)}
+            />
+            <FilterChip
+              label="Assessment"
+              selected={mode === MODE_ASSESSMENT}
+              onToggle={() => setMode(MODE_ASSESSMENT)}
+            />
           </div>
-
-          <div className="border-t border-slate-200/80 pt-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-slate-500 text-sm w-16 shrink-0">Response</span>
+            <FilterChip
+              label="Written"
+              selected={responseMode === RESPONSE_TYPE}
+              onToggle={() => setResponseMode(RESPONSE_TYPE)}
+            />
+            <FilterChip
+              label="Spoken"
+              selected={responseMode === RESPONSE_VOICE}
+              onToggle={() => setResponseMode(RESPONSE_VOICE)}
+            />
+          </div>
+          {responseMode === RESPONSE_VOICE && (
+            <div className="flex flex-wrap items-center gap-2 pl-[4.5rem] md:pl-20">
+              <span className="text-slate-500 text-sm">
+                Microphone: {activeMicLabel ?? '…'}
+              </span>
+              <button
+                type="button"
+                onClick={refreshActiveMic}
+                className="text-[#003063] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-[#003063] focus:ring-offset-1 rounded"
+              >
+                Refresh
+              </button>
+            </div>
+          )}
+          <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-slate-500 text-sm">
+            <span className="w-16 shrink-0 text-slate-500 text-sm">Structure</span>
             {mode === MODE_ASSESSMENT ? (
-              <p className="text-slate-500 text-sm text-left">
-                Fixed: {TEST_QUESTION_COUNT} questions, {TEST_TIMER_SECONDS} sec each, all topics
-              </p>
+              <span>
+                Fixed: {TEST_QUESTION_COUNT} questions, {TEST_TIMER_SECONDS} seconds each, all topics
+              </span>
             ) : (
               <>
-                <p className="text-slate-500 text-sm mb-3">Session</p>
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
-                  <div className="flex items-center gap-2">
-                    <span className="text-slate-600 text-sm">Questions</span>
-                    <NumberInput
-                      value={scenarioCount}
-                      onChange={setScenarioCount}
-                      min={SCENARIO_COUNT_MIN}
-                      max={maxQuestions}
-                    />
-                  </div>
-                  <TimeOptionRow
-                    seconds={timerSeconds}
-                    onSecondsChange={setTimerSeconds}
-                  />
-                </div>
-                <div className="mt-4 pt-4 border-t border-slate-200/80 space-y-2">
-                  <CollapsibleFilterSection
-                    title="Topics"
-                    description="Which areas do you want to practice?"
-                    options={PILLARS}
-                    selected={pillar}
-                    onToggle={(v) => toggle(setPillar, v)}
-                  />
-                  <CollapsibleFilterSection
-                    title="Plan"
-                    description="Which plan levels do you want to practice?"
-                    options={PLAN_TIERS}
-                    selected={planTier}
-                    onToggle={(v) => toggle(setPlanTier, v)}
-                  />
-                  <CollapsibleFilterSection
-                    title="Difficulty"
-                    description="Which difficulty levels do you want to practice?"
-                    options={DIFFICULTIES}
-                    selected={difficulty}
-                    onToggle={(v) => toggle(setDifficulty, v)}
-                  />
-                  <CollapsibleFilterSection
-                    title="Customer type"
-                    description="Which customer types do you want to see in your scenarios?"
-                    options={PERSONAS}
-                    selected={persona}
-                    onToggle={(v) => toggle(setPersona, v)}
-                  />
-                </div>
+                <NumberInput
+                  value={scenarioCount}
+                  onChange={setScenarioCount}
+                  min={SCENARIO_COUNT_MIN}
+                  max={maxQuestions}
+                />
+                <span>questions at</span>
+                <NumberInput
+                  value={timerSeconds}
+                  onChange={setTimerSeconds}
+                  min={TIMER_SEC_MIN}
+                  max={TIMER_SEC_MAX}
+                />
+                <span>seconds each.</span>
               </>
             )}
           </div>
+
+          {/* Filters: Topics, Difficulty, Customer type */}
+          {mode === MODE_PRACTICE && (
+            <div className="mt-4 pt-4 border-t border-slate-200/80 space-y-2">
+              <CollapsibleFilterSection
+                title="Topics"
+                description="Which areas do you want to practice?"
+                options={TOPICS}
+                selected={topic}
+                onToggle={(v) => toggle(setTopic, v)}
+              />
+              <CollapsibleFilterSection
+                title="Difficulty"
+                description="Which difficulty levels do you want to practice?"
+                options={DIFFICULTIES}
+                selected={difficulty}
+                onToggle={(v) => toggle(setDifficulty, v)}
+              />
+              <CollapsibleFilterSection
+                title="Customer type"
+                description="Which customer types do you want to see in your scenarios?"
+                options={PERSONAS}
+                selected={persona}
+                onToggle={(v) => toggle(setPersona, v)}
+              />
+              {(topic.length > 0 || difficulty.length > 0 || persona.length > 0) && (
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={handleResetFilters}
+                    className="min-h-[44px] py-2.5 px-3 rounded-lg border border-slate-300 bg-white text-slate-600 text-sm font-medium hover:bg-slate-50 hover:border-slate-400 transition-colors"
+                  >
+                    Reset Filters
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {showFilterWarning && (
@@ -499,7 +540,7 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleStart}
-          className="w-full py-3 px-6 rounded-xl bg-[#003063] text-white font-medium shadow-lg shadow-[0_4px_20px_rgba(0,48,99,0.3)] hover:bg-[#002550] transition-colors"
+          className="w-full min-h-[44px] py-3 px-6 rounded-xl bg-[#003063] text-white text-base font-medium shadow-lg shadow-[0_4px_20px_rgba(0,48,99,0.3)] hover:bg-[#002550] transition-colors"
         >
           {mode === MODE_ASSESSMENT ? 'Start assessment' : 'Start session'}
         </motion.button>
@@ -526,22 +567,72 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
               <p className="text-slate-800 font-medium mb-3">How it works</p>
               <div className="text-slate-600 text-sm leading-relaxed space-y-3 overflow-y-auto pr-1 flex-1 min-h-0">
                 <p>
-                  <strong>Scenarios.</strong> Questions are generated from Gemini, trained on Jobber content.
-                </p>
-                <p>
-                  <strong>Your session.</strong> You answer on the fly in timed scenarios. Each session produces a single output for Gemini to review, score, and provide further insights.
+                  <strong>Your session.</strong> You answer on the fly in timed scenarios. Each session produces a single output for Gemini to review, score, and provide further insights. You can't go back—like a real call.
                 </p>
                 <p>
                   <strong>Why use it.</strong> Develop your knowledge base in a real-time, dynamic environment. Practice under time pressure, get scored and guided, and build confidence for support and sales conversations.
                 </p>
                 <p>
-                  <strong>Feedback.</strong> It's a gift, please provide your hot take on this tool @Enrique on Slack.
+                  <strong>Feedback.</strong> It's a gift, please provide your hot take on this tool to @Enrique on Slack.
                 </p>
               </div>
               <div className="flex justify-end pt-4 mt-2 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setShowHowItWorks(false)}
+                  className="py-2.5 px-4 rounded-lg bg-[#003063] text-white text-sm font-medium hover:bg-[#002550] transition-colors"
+                >
+                  Got it
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Under the hood modal */}
+      <AnimatePresence>
+        {showUnderTheHood && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-10 flex items-center justify-center p-4 bg-slate-900/40"
+            onClick={() => setShowUnderTheHood(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.96, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.96, opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              className="rounded-2xl bg-white border border-slate-200 shadow-xl p-6 max-w-sm w-full max-h-[85vh] flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <p className="text-slate-800 font-medium mb-3">Under the hood</p>
+              <div className="text-slate-600 text-sm leading-relaxed space-y-4 overflow-y-auto pr-1 flex-1 min-h-0">
+                <div>
+                  <p className="font-medium text-slate-700 mb-1">Scenario prompt</p>
+                  <p className="mb-1">
+                    The prompt used to generate practice questions (topics, difficulty, personas). Edit it to change how scenarios are created.
+                  </p>
+                  <p className="text-xs text-slate-500 font-mono">
+                    src/data/scenario-generation-prompt.md
+                  </p>
+                </div>
+                <div>
+                  <p className="font-medium text-slate-700 mb-1">Scoring preamble</p>
+                  <p className="mb-1">
+                    Instructions sent to Gemini with your transcript so it knows how to score (plan gating, technical accuracy, tone). Edit it to change the scorecard criteria.
+                  </p>
+                  <p className="text-xs text-slate-500 font-mono">
+                    src/data/gemini-preamble.md
+                  </p>
+                </div>
+              </div>
+              <div className="flex justify-end pt-4 mt-2 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setShowUnderTheHood(false)}
                   className="py-2.5 px-4 rounded-lg bg-[#003063] text-white text-sm font-medium hover:bg-[#002550] transition-colors"
                 >
                   Got it

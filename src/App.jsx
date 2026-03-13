@@ -8,6 +8,7 @@ import SessionSummary from './components/SessionSummary'
 
 const DEFAULT_SCENARIO_COUNT = 10
 const DEFAULT_TIMER_SECONDS = 60
+const BUFFER_SECONDS = 3
 const SpeechRecognitionAPI = typeof window !== 'undefined' && (window.SpeechRecognition || window.webkitSpeechRecognition)
 
 function shuffle(array) {
@@ -34,16 +35,24 @@ export default function App() {
       ? scenariosData.filter((s) => scenarioMatchesFilters(s, sessionFilters))
       : scenariosData
     if (pool.length === 0) pool = scenariosData
+    // Randomize order each session so users don't see the same sequence repeatedly
     return shuffle(pool).slice(0, sessionScenarioCount)
   }, [phase, sessionFilters, sessionScenarioCount])
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [bufferCountdown, setBufferCountdown] = useState(null)
   const [showExitConfirm, setShowExitConfirm] = useState(false)
   const [sessionLiveTranscript, setSessionLiveTranscript] = useState('')
   const recognitionRef = useRef(null)
+  const recognitionRestartTimeoutRef = useRef(null)
+  const prevQuestionIndexRef = useRef(null)
+  const initialBufferRef = useRef(false)
 
   useEffect(() => {
-    setSessionLiveTranscript(sessionResponses[currentQuestionIndex]?.response ?? '')
+    if (prevQuestionIndexRef.current !== currentQuestionIndex) {
+      prevQuestionIndexRef.current = currentQuestionIndex
+      setSessionLiveTranscript(sessionResponses[currentQuestionIndex]?.response ?? '')
+    }
   }, [currentQuestionIndex, sessionResponses])
 
   useEffect(() => {
@@ -55,33 +64,68 @@ export default function App() {
       return
     }
     const Recognition = SpeechRecognitionAPI
-    const recognition = new Recognition()
-    recognition.continuous = true
-    recognition.interimResults = true
-    recognition.lang = 'en-US'
-    recognition.onresult = (event) => {
-      let final = ''
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        if (event.results[i].isFinal) final += event.results[i][0].transcript
+
+    function createRecognition() {
+      const rec = new Recognition()
+      rec.continuous = true
+      rec.interimResults = true
+      rec.lang = 'en-US'
+      rec.onresult = (event) => {
+        let final = ''
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) final += event.results[i][0].transcript
+        }
+        if (final) {
+          setSessionLiveTranscript((prev) => (prev ? `${prev} ${final}` : final).trim())
+        }
       }
-      if (final) {
-        setSessionLiveTranscript((prev) => (prev ? `${prev} ${final}` : final).trim())
+      rec.onerror = () => {}
+      rec.onend = () => {
+        if (recognitionRef.current !== rec) return
+        const delays = [100, 300, 800, 2000]
+        let attempt = 0
+        const tryStart = (current = rec) => {
+          if (recognitionRef.current !== rec) return
+          try {
+            current.start()
+          } catch (_) {
+            attempt += 1
+            if (attempt < delays.length) {
+              recognitionRestartTimeoutRef.current = setTimeout(() => tryStart(current), delays[attempt - 1])
+            } else {
+              const fresh = createRecognition()
+              recognitionRef.current = fresh
+              try { fresh.start() } catch (__) {}
+            }
+          }
+        }
+        recognitionRestartTimeoutRef.current = setTimeout(() => tryStart(), delays[0])
       }
+      return rec
     }
-    recognition.onerror = () => {}
+
+    const recognition = createRecognition()
     recognitionRef.current = recognition
     try {
       recognition.start()
     } catch (_) {}
     return () => {
-      try { recognition.stop() } catch (_) {}
-      recognitionRef.current = null
+      if (recognitionRestartTimeoutRef.current) clearTimeout(recognitionRestartTimeoutRef.current)
+      recognitionRestartTimeoutRef.current = null
+      const current = recognitionRef.current
+      if (current) {
+        try { current.stop() } catch (_) {}
+        recognitionRef.current = null
+      }
     }
   }, [phase, sessionResponseMode])
 
   const startSession = useCallback((filters = null, options = {}) => {
     setSessionResponses([])
     setCurrentQuestionIndex(0)
+    initialBufferRef.current = true
+    setBufferCountdown(BUFFER_SECONDS)
+    setSessionLiveTranscript('')
     setSessionFilters(filters)
     setSessionScenarioCount(options.scenarioCount ?? DEFAULT_SCENARIO_COUNT)
     setSessionTimerSeconds(options.timerSeconds ?? DEFAULT_TIMER_SECONDS)
@@ -103,13 +147,10 @@ export default function App() {
     if (index >= sessionScenarios.length - 1) {
       setPhase('summary')
     } else {
-      setCurrentQuestionIndex(index + 1)
+      setSessionLiveTranscript('')
+      setBufferCountdown(BUFFER_SECONDS)
     }
   }, [sessionScenarios.length])
-
-  const handleBack = useCallback(() => {
-    setCurrentQuestionIndex((i) => (i > 0 ? i - 1 : i))
-  }, [])
 
   const handleExitClick = useCallback(() => setShowExitConfirm(true), [])
   const handleExitConfirm = useCallback(() => {
@@ -119,6 +160,25 @@ export default function App() {
     setShowExitConfirm(false)
   }, [])
   const handleExitCancel = useCallback(() => setShowExitConfirm(false), [])
+
+  useEffect(() => {
+    if (bufferCountdown == null || bufferCountdown <= 0) return
+    const id = setInterval(() => {
+      setBufferCountdown((prev) => {
+        if (prev == null || prev <= 0) return prev
+        if (prev === 1) {
+          if (initialBufferRef.current) {
+            initialBufferRef.current = false
+          } else {
+            setCurrentQuestionIndex((i) => i + 1)
+          }
+          return null
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(id)
+  }, [bufferCountdown])
 
   const currentScenario = sessionScenarios[currentQuestionIndex]
   const previousResponse = sessionResponses[currentQuestionIndex]?.response ?? ''
@@ -169,7 +229,22 @@ export default function App() {
             </motion.div>
           </motion.div>
         )}
-        {phase === 'scenarios' && currentScenario && (
+        {phase === 'scenarios' && bufferCountdown != null && (
+          <motion.div
+            key="buffer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="w-full max-w-2xl rounded-2xl bg-white border border-slate-200 shadow-xl shadow-slate-200/50 p-8 md:p-12 flex flex-col items-center justify-center"
+          >
+            <p className="text-slate-600 text-sm md:text-base mb-4">{initialBufferRef.current ? 'First question in' : 'Next question in'}</p>
+            <p className="text-4xl md:text-5xl font-semibold tabular-nums text-[#003063]" aria-live="polite">
+              {bufferCountdown}
+            </p>
+          </motion.div>
+        )}
+        {phase === 'scenarios' && bufferCountdown == null && currentScenario && (
           <ScenarioCard
             key={`${currentScenario.id}-${currentQuestionIndex}`}
             scenario={currentScenario}
@@ -180,7 +255,6 @@ export default function App() {
             initialResponse={previousResponse}
             liveTranscript={sessionResponseMode === 'voice' ? sessionLiveTranscript : undefined}
             setLiveTranscript={sessionResponseMode === 'voice' ? setSessionLiveTranscript : undefined}
-            onBack={currentQuestionIndex > 0 ? handleBack : undefined}
             onExit={handleExitClick}
             onSubmit={(response) => {
               handleScenarioSubmit(currentScenario.id, currentScenario.query, response, currentQuestionIndex)
@@ -193,6 +267,7 @@ export default function App() {
             responses={sessionResponses}
             sessionComplete={sessionComplete}
             sessionMode={sessionMode}
+            timerSeconds={sessionTimerSeconds}
             onBackToStart={() => setPhase('start')}
           />
         )}

@@ -12,7 +12,6 @@ export default function ScenarioCard({
   initialResponse = '',
   liveTranscript,
   setLiveTranscript,
-  onBack,
   onExit,
   onSubmit,
 }) {
@@ -20,15 +19,21 @@ export default function ScenarioCard({
   const [secondsLeft, setSecondsLeft] = useState(unlimited ? 1 : timerSeconds)
   const [response, setResponse] = useState(initialResponse)
   const [isListening, setIsListening] = useState(false)
+  const [activeMicLabel, setActiveMicLabel] = useState(null)
   const submitted = useRef(false)
   const recognitionRef = useRef(null)
+  const restartTimeoutRef = useRef(null)
+  const answerRef = useRef(null)
   const isVoice = responseMode === 'voice'
   const sessionVoice = isVoice && liveTranscript !== undefined && setLiveTranscript
   const displayValue = sessionVoice ? liveTranscript : response
   const setDisplayValue = sessionVoice ? setLiveTranscript : setResponse
 
-  const progress = unlimited ? 100 : (secondsLeft / timerSeconds) * 100
   const isLowTime = !unlimited && secondsLeft <= 15
+  const countdownDisplay = unlimited ? null : `${Math.floor(secondsLeft / 60)}:${(secondsLeft % 60).toString().padStart(2, '0')}`
+  const useCircleProgress = total <= 12
+  const segmentCount = 10
+  const filledSegments = useCircleProgress ? 0 : Math.min(segmentCount, Math.ceil(((index + 1) / total) * segmentCount))
 
   const submit = useCallback(() => {
     if (submitted.current) return
@@ -36,10 +41,6 @@ export default function ScenarioCard({
     const value = sessionVoice ? liveTranscript : response
     onSubmit((value || '').trim() || '[No response]')
   }, [sessionVoice, liveTranscript, response, onSubmit])
-
-  const handleBack = useCallback(() => {
-    onBack?.()
-  }, [onBack])
 
   useEffect(() => {
     if (unlimited) return
@@ -61,6 +62,12 @@ export default function ScenarioCard({
     submitted.current = false
     setIsListening(false)
   }, [scenario.id, timerSeconds, unlimited, initialResponse, sessionVoice])
+
+  // Focus answer area when question changes (keyboard/screen reader)
+  useEffect(() => {
+    const t = setTimeout(() => answerRef.current?.focus({ preventScroll: true }), 100)
+    return () => clearTimeout(t)
+  }, [scenario.id])
 
   useEffect(() => {
     if (sessionVoice || !isVoice || !SpeechRecognitionAPI || !isListening) {
@@ -92,7 +99,24 @@ export default function ScenarioCard({
       if (event.error === 'not-allowed' || event.error === 'aborted') setIsListening(false)
     }
     recognition.onend = () => {
-      if (recognitionRef.current === recognition) setIsListening(false)
+      // Keep listening regardless of silence: restart every time the browser ends the session.
+      if (recognitionRef.current !== recognition) return
+      const delays = [100, 300, 800]
+      let attempt = 0
+      const tryStart = () => {
+        if (recognitionRef.current !== recognition) return
+        try {
+          recognition.start()
+        } catch (_) {
+          attempt += 1
+          if (attempt < delays.length) {
+            restartTimeoutRef.current = setTimeout(tryStart, delays[attempt - 1])
+          } else {
+            setIsListening(false)
+          }
+        }
+      }
+      restartTimeoutRef.current = setTimeout(tryStart, delays[0])
     }
     recognitionRef.current = recognition
     try {
@@ -101,15 +125,53 @@ export default function ScenarioCard({
       setIsListening(false)
     }
     return () => {
+      if (restartTimeoutRef.current) clearTimeout(restartTimeoutRef.current)
+      restartTimeoutRef.current = null
       try { recognition.stop() } catch (_) {}
       recognitionRef.current = null
     }
   }, [isVoice, isListening])
 
+  // Detect current microphone when in voice mode (and when user starts listening, so switching mics is reflected)
+  const refreshActiveMic = useCallback(() => {
+    if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
+      setActiveMicLabel(null)
+      return
+    }
+    setActiveMicLabel(null)
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then((stream) => {
+        const track = stream.getAudioTracks()[0]
+        if (!track) {
+          stream.getTracks().forEach((t) => t.stop())
+          return
+        }
+        const deviceId = track.getSettings().deviceId
+        stream.getTracks().forEach((t) => t.stop())
+        if (!deviceId) {
+          setActiveMicLabel(track.label || 'Default microphone')
+          return
+        }
+        navigator.mediaDevices.enumerateDevices()
+          .then((devices) => {
+            const audio = devices.find((d) => d.kind === 'audioinput' && d.deviceId === deviceId)
+            setActiveMicLabel(audio?.label || track.label || 'Default microphone')
+          })
+          .catch(() => setActiveMicLabel(track.label || 'Default microphone'))
+      })
+      .catch(() => setActiveMicLabel('(microphone access denied)'))
+  }, [])
+
+  useEffect(() => {
+    if (!isVoice || !SpeechRecognitionAPI) return
+    refreshActiveMic()
+  }, [isVoice, refreshActiveMic])
+
   const toggleListening = useCallback(() => {
     if (!SpeechRecognitionAPI) return
+    refreshActiveMic()
     setIsListening((prev) => !prev)
-  }, [])
+  }, [refreshActiveMic])
 
   return (
     <motion.div
@@ -124,53 +186,89 @@ export default function ScenarioCard({
         {/* Session progress — how far through the practice + exit */}
         <div className="px-6 pt-4 pb-1 md:px-8">
           <div className="flex items-center justify-between gap-2 mb-1.5">
-            <span className="text-slate-500 text-xs font-medium">
+            <span className="text-slate-500 text-xs font-medium flex items-center gap-1.5">
               Question {index + 1} of {total}
-            </span>
-            <div className="flex items-center gap-2">
-              <span className="text-slate-400 text-xs tabular-nums">
+              <span className="text-slate-400 tabular-nums">
                 {Math.round(((index + 1) / total) * 100)}%
               </span>
+            </span>
+            <div className="flex items-center gap-3">
+              {countdownDisplay != null && (
+                <>
+                  <span className={`tabular-nums font-semibold text-sm min-h-[44px] min-w-[44px] flex items-center justify-center ${isLowTime ? 'text-rose-600' : 'text-slate-600'}`} aria-label={`${secondsLeft} seconds left`}>
+                    {countdownDisplay}
+                  </span>
+                  <span className="sr-only" aria-live="polite" aria-atomic="true">
+                    {[30, 15, 10, 5, 4, 3, 2, 1].includes(secondsLeft) ? `${secondsLeft} seconds left` : ''}
+                  </span>
+                </>
+              )}
               {onExit && (
                 <button
                   type="button"
                   onClick={onExit}
                   aria-label="Exit session"
-                  className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[#003063] focus:ring-offset-1 text-lg leading-none"
+                  className="min-w-[44px] min-h-[44px] w-10 h-10 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[#003063] focus:ring-offset-1 text-xl leading-none"
                 >
                   ×
                 </button>
               )}
             </div>
           </div>
-          <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-[#003063] rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${((index + 1) / total) * 100}%` }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-            />
-          </div>
+          {useCircleProgress ? (
+            <div className="flex flex-wrap gap-1.5 justify-center md:justify-start" role="progressbar" aria-valuenow={index + 1} aria-valuemin={1} aria-valuemax={total} aria-label={`Question ${index + 1} of ${total}`}>
+              {Array.from({ length: index + 1 }, (_, i) => {
+                const isCurrent = i === index
+                return (
+                  <span
+                    key={i}
+                    className={`inline-block rounded-full shrink-0 transition-colors ${
+                      isCurrent ? 'bg-[#003063] ring-2 ring-[#003063] ring-offset-2 ring-offset-white' : 'bg-[#003063]'
+                    }`}
+                    style={{ width: 8, height: 8 }}
+                    aria-hidden
+                  />
+                )
+              })}
+            </div>
+          ) : (
+            <div className="flex gap-0.5 h-2" role="progressbar" aria-valuenow={index + 1} aria-valuemin={1} aria-valuemax={total} aria-label={`Question ${index + 1} of ${total}`}>
+              {Array.from({ length: segmentCount }, (_, i) => (
+                <span
+                  key={i}
+                  className={`flex-1 rounded-sm min-w-0 ${i < filledSegments ? 'bg-[#003063]' : 'bg-slate-200'}`}
+                  aria-hidden
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="p-6 md:p-8">
-          {/* Query — Inter, clear */}
+          {/* Query */}
           <p className="font-sans text-slate-800 text-base md:text-lg leading-relaxed mb-6">
             {scenario.query}
           </p>
 
-          {/* Voice: session-level listening (always on) or per-question mic button */}
+          {/* Voice: session-level listening or per-question mic button */}
           {isVoice && (
             <div className="mb-3">
               {SpeechRecognitionAPI ? (
                 <>
                   {sessionVoice ? (
-                    <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-rose-50 border border-rose-200">
-                      <span className="relative flex h-3 w-3">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500" />
-                      </span>
-                      <span className="text-rose-800 font-medium text-sm">Listening for entire session — speak your answer; you can also type or edit below.</span>
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-rose-50 border border-rose-200">
+                        <span className="relative flex h-3 w-3">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500" />
+                        </span>
+                        <span className="text-rose-800 font-medium text-sm">Listening for entire session — speak your answer; you can also type or edit below.</span>
+                      </div>
+                      {activeMicLabel && (
+                        <p className="text-slate-500 text-xs px-1" aria-live="polite">
+                          Microphone: {activeMicLabel}
+                        </p>
+                      )}
                     </div>
                   ) : (
                     <>
@@ -193,6 +291,11 @@ export default function ScenarioCard({
                         </button>
                         <span className="text-slate-500 text-sm">Speak your answer; you can also type or edit below.</span>
                       </div>
+                      {activeMicLabel && (
+                        <p className="text-slate-500 text-xs mt-1 px-1" aria-live="polite">
+                          Microphone: {activeMicLabel}
+                        </p>
+                      )}
                       <AnimatePresence>
                         {isListening && (
                           <motion.div
@@ -222,48 +325,32 @@ export default function ScenarioCard({
 
           {/* Borderless text area for bullet-point responses */}
           <textarea
+            ref={answerRef}
             className="answer-input font-sans text-slate-700 text-sm md:text-base min-h-[120px] py-2"
             placeholder={isVoice ? "• Speak and/or type your bullet points…" : "• Your bullet points here..."}
             value={displayValue}
             onChange={(e) => setDisplayValue(e.target.value)}
+            onKeyDown={(e) => {
+              if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+                e.preventDefault()
+                submit()
+              }
+            }}
+            aria-label="Your answer"
           />
 
-          <div className="flex justify-between items-center mt-4 gap-3">
-            <div>
-              {onBack && (
-                <motion.button
-                  type="button"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleBack}
-                  className="py-2.5 px-5 rounded-lg border border-slate-300 bg-white text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors"
-                >
-                  ← Previous
-                </motion.button>
-              )}
-            </div>
+          <div className="flex justify-end mt-4">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={submit}
-              className="py-2.5 px-5 rounded-lg bg-[#003063] text-white text-sm font-medium shadow-md shadow-[0_4px_14px_rgba(0,48,99,0.25)] hover:bg-[#002550] transition-colors"
+              className="min-h-[44px] py-2.5 px-5 rounded-lg bg-[#003063] text-white text-sm md:text-base font-medium shadow-md shadow-[0_4px_14px_rgba(0,48,99,0.25)] hover:bg-[#002550] transition-colors"
             >
-              Submit &amp; next
+              Next question
             </motion.button>
           </div>
         </div>
 
-        {/* Countdown timer — bottom of card, only when time limit is set */}
-        {!unlimited && (
-          <div className="h-1.5 bg-slate-200 overflow-hidden">
-            <motion.div
-              className={`h-full ${isLowTime ? 'bg-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.5)]' : 'bg-[#003063] shadow-[0_0_12px_rgba(0,48,99,0.4)]'}`}
-              initial={{ width: '100%' }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.5, ease: 'linear' }}
-            />
-          </div>
-        )}
       </div>
     </motion.div>
   )
