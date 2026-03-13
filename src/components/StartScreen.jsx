@@ -421,7 +421,7 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
           Call Gym
         </h1>
         <p className="text-slate-600 text-sm md:text-base mb-5 text-center">
-          Put in reps. Fail-forward. Crush your calls.
+          Put in reps. Fail-forward. Crush your KO.
         </p>
 
         <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 mb-5 text-left space-y-4">
@@ -567,7 +567,7 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
               <p className="text-slate-800 font-medium mb-3">How it works</p>
               <div className="text-slate-600 text-sm leading-relaxed space-y-3 overflow-y-auto pr-1 flex-1 min-h-0">
                 <p>
-                  <strong>Your session.</strong> You answer on the fly in timed scenarios. Each session produces a single output for Gemini to review, score, and provide further insights. You can't go back—like a real call.
+                  <strong>Your session.</strong> You answer on the fly in timed scenarios. Each session produces a single output for CallGymGPT to review, score, and provide further insights. You can't go back—like a real call.
                 </p>
                 <p>
                   <strong>Why use it.</strong> Develop your knowledge base in a real-time, dynamic environment. Practice under time pressure, get scored and guided, and build confidence for support and sales conversations.
@@ -622,10 +622,10 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
                 <div>
                   <p className="font-medium text-slate-700 mb-1">Scoring preamble</p>
                   <p className="mb-1">
-                    Instructions sent to Gemini with your transcript so it knows how to score (plan gating, technical accuracy, tone). Edit it to change the scorecard criteria.
+                    Instructions sent with your transcript so CallGymGPT knows how to score (plan gating, technical accuracy, tone). Edit it to change the scorecard criteria.
                   </p>
                   <p className="text-xs text-slate-500 font-mono">
-                    src/data/gemini-preamble.md
+                    src/data/CallGymGPT-preamble.md
                   </p>
                 </div>
               </div>

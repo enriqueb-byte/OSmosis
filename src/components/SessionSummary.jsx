@@ -1,20 +1,20 @@
 import { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import geminiPreambleRaw from '../data/gemini-preamble.md?raw'
+import callGymPreambleRaw from '../data/CallGymGPT-preamble.md?raw'
 
 const LAST_TRANSCRIPT_KEY = 'osmosis_last_transcript'
 const MAX_SAVED_TRANSCRIPTS = 3
 
 // Vite may give string or { default: string }; use a fallback if missing
 const getPreamble = () => {
-  const text = typeof geminiPreambleRaw === 'string' ? geminiPreambleRaw : (geminiPreambleRaw?.default ?? '')
+  const text = typeof callGymPreambleRaw === 'string' ? callGymPreambleRaw : (callGymPreambleRaw?.default ?? '')
   const trimmed = (text || '').trim()
   return trimmed || 'You are scoring a Call Gym practice session (Jobber field-service drill). Review the scenario Q&As below and produce a short scorecard. Reply only with the scorecard in markdown.'
 }
 
 /**
- * Builds a self-contained transcript: preamble (prompts Gemini with Jobber context + instructions), then Q&As.
- * User pastes once into Gemini and gets a scorecard back.
+ * Builds a self-contained transcript: preamble (instructions for CallGymGPT scoring), then Q&As.
+ * User pastes once into CallGymGPT (ChatGPT) and gets a scorecard back.
  */
 function buildMarkdownTranscript(responses, sessionMode = 'practice') {
   const now = new Date()
@@ -45,7 +45,7 @@ function buildMarkdownTranscript(responses, sessionMode = 'practice') {
   return [
     '# Call Gym Session Transcript',
     '',
-    '## Instructions for the scorer (e.g. Gemini)',
+    '## Instructions for the scorer (e.g. CallGymGPT)',
     '',
     preamble,
     '',
@@ -89,13 +89,11 @@ export default function SessionSummary({ responses, sessionComplete, sessionMode
     }
   }, [responses, sessionComplete, sessionMode])
 
-  const GEMINI_URL = 'https://gemini.google.com/gem/1kw8kuzO_wgb2umOvLuKev9lgh2IRE2Xb?usp=sharing'
+  const CHATGPT_URL = 'https://chatgpt.com/g/g-69b45f13ba708191be76244157051114-call-gym'
 
-  const copyAndOpenGemini = useCallback(() => {
+  const copyAndOpenChatGPT = useCallback(() => {
     setCopyFailed(false)
-    // Open first so it's in the same user gesture (avoids popup blockers); then copy.
-    window.open(GEMINI_URL, '_blank', 'noopener,noreferrer')
-
+    window.open(CHATGPT_URL, '_blank', 'noopener,noreferrer')
     function onCopySuccess() {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
@@ -103,8 +101,6 @@ export default function SessionSummary({ responses, sessionComplete, sessionMode
     function onCopyFailure() {
       setCopyFailed(true)
     }
-
-    // Prefer Clipboard API; fallback to execCommand for strict or flaky environments.
     if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(md).then(onCopySuccess).catch(() => {
         try {
@@ -172,24 +168,20 @@ export default function SessionSummary({ responses, sessionComplete, sessionMode
         </div>
 
         <div className="mt-6 space-y-4">
-          <motion.button
+          <button
             type="button"
-            animate={sessionComplete ? { scale: [1, 1.02, 1] } : {}}
-            transition={{ repeat: Infinity, repeatDelay: 2, duration: 1.2 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={copyAndOpenGemini}
+            onClick={copyAndOpenChatGPT}
             className="w-full py-3 px-4 rounded-xl bg-[#003063] text-white font-medium shadow-lg shadow-[0_4px_20px_rgba(0,48,99,0.3)] hover:bg-[#002550] transition-colors text-sm"
           >
-            {copied ? 'Copied! Opening Gemini…' : 'Copy and paste into Gemini for a scorecard'}
-          </motion.button>
+            {copied ? 'Copied! Opening ChatGPT…' : 'Copy and open ChatGPT'}
+          </button>
           <p className="text-slate-500 text-xs">
-            If Gemini didn&apos;t open, paste at gemini.google.com
+            If ChatGPT didn&apos;t open, paste at chatgpt.com
           </p>
           {copyFailed && (
             <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-amber-800 text-sm">
               <p className="font-medium mb-1">Copy failed (e.g. clipboard not allowed)</p>
-              <p className="mb-2">Select and copy the transcript below, then paste at gemini.google.com</p>
+              <p className="mb-2">Select and copy the transcript below, then paste into ChatGPT.</p>
               <textarea
                 readOnly
                 value={md}

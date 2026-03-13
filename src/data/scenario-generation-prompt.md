@@ -2,7 +2,7 @@
 
 The Call Gym Scenario Generator Prompt
 
-**Number of scenarios to generate:** ___
+**Number of scenarios to generate:** 250
 
 ---
 

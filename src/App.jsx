@@ -9,6 +9,9 @@ import SessionSummary from './components/SessionSummary'
 const DEFAULT_SCENARIO_COUNT = 10
 const DEFAULT_TIMER_SECONDS = 60
 const BUFFER_SECONDS = 3
+const RECENT_BLACKLIST_KEY = 'callgym_recent_scenario_ids'
+const LAST_FILTERS_KEY = 'callgym_last_filters'
+const RECENT_BLACKLIST_SIZE = 50
 const SpeechRecognitionAPI = typeof window !== 'undefined' && (window.SpeechRecognition || window.webkitSpeechRecognition)
 
 function shuffle(array) {
@@ -29,24 +32,18 @@ export default function App() {
   const [sessionResponseMode, setSessionResponseMode] = useState('type')
   const [sessionMode, setSessionMode] = useState('practice')
 
-  const sessionScenarios = useMemo(() => {
-    if (phase === 'start') return []
-    let pool = sessionFilters
-      ? scenariosData.filter((s) => scenarioMatchesFilters(s, sessionFilters))
-      : scenariosData
-    if (pool.length === 0) pool = scenariosData
-    // Randomize order each session so users don't see the same sequence repeatedly
-    return shuffle(pool).slice(0, sessionScenarioCount)
-  }, [phase, sessionFilters, sessionScenarioCount])
-
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [bufferCountdown, setBufferCountdown] = useState(null)
   const [showExitConfirm, setShowExitConfirm] = useState(false)
   const [sessionLiveTranscript, setSessionLiveTranscript] = useState('')
+  const [sessionScenariosList, setSessionScenariosList] = useState([])
   const recognitionRef = useRef(null)
   const recognitionRestartTimeoutRef = useRef(null)
   const prevQuestionIndexRef = useRef(null)
   const initialBufferRef = useRef(false)
+  const sessionScenariosRef = useRef([])
+
+  const sessionScenarios = phase === 'start' ? [] : sessionScenariosList
 
   useEffect(() => {
     if (prevQuestionIndexRef.current !== currentQuestionIndex) {
@@ -121,13 +118,51 @@ export default function App() {
   }, [phase, sessionResponseMode])
 
   const startSession = useCallback((filters = null, options = {}) => {
+    const raw = Array.isArray(scenariosData) ? scenariosData : (scenariosData?.default ?? [])
+    const count = Math.max(1, options.scenarioCount ?? DEFAULT_SCENARIO_COUNT)
+
+    // Clear recent blacklist when filters change so fresh pool per filter set
+    try {
+      const filtersJson = JSON.stringify(filters)
+      const lastFiltersJson = localStorage.getItem(LAST_FILTERS_KEY)
+      if (lastFiltersJson !== filtersJson) {
+        localStorage.removeItem(RECENT_BLACKLIST_KEY)
+        localStorage.setItem(LAST_FILTERS_KEY, filtersJson)
+      }
+    } catch (_) {}
+
+    let pool = filters && Array.isArray(raw)
+      ? raw.filter((s) => scenarioMatchesFilters(s, filters))
+      : raw
+    if (!Array.isArray(pool) || pool.length === 0) pool = raw
+
+    let recentIds = []
+    try {
+      const stored = localStorage.getItem(RECENT_BLACKLIST_KEY)
+      if (stored) {
+        const parsed = JSON.parse(stored)
+        recentIds = Array.isArray(parsed) ? parsed : []
+      }
+    } catch (_) {}
+
+    let poolExcludingRecent = Array.isArray(pool)
+      ? pool.filter((s) => !recentIds.includes(s.id))
+      : pool
+    if (!Array.isArray(poolExcludingRecent) || poolExcludingRecent.length < count) {
+      poolExcludingRecent = pool
+    }
+    const list = Array.isArray(poolExcludingRecent)
+      ? shuffle([...poolExcludingRecent]).slice(0, count)
+      : []
+    sessionScenariosRef.current = list
+    setSessionScenariosList(list)
     setSessionResponses([])
     setCurrentQuestionIndex(0)
-    initialBufferRef.current = true
-    setBufferCountdown(BUFFER_SECONDS)
+    initialBufferRef.current = false
+    setBufferCountdown(null)
     setSessionLiveTranscript('')
     setSessionFilters(filters)
-    setSessionScenarioCount(options.scenarioCount ?? DEFAULT_SCENARIO_COUNT)
+    setSessionScenarioCount(count)
     setSessionTimerSeconds(options.timerSeconds ?? DEFAULT_TIMER_SECONDS)
     setSessionResponseMode(options.responseMode ?? 'type')
     setSessionMode(options.sessionMode ?? 'practice')
@@ -145,6 +180,15 @@ export default function App() {
       return [...prev, entry]
     })
     if (index >= sessionScenarios.length - 1) {
+      try {
+        const idsThisSession = (sessionScenariosRef.current || []).map((s) => s.id)
+        if (idsThisSession.length > 0) {
+          const stored = localStorage.getItem(RECENT_BLACKLIST_KEY)
+          const recent = stored ? (JSON.parse(stored) || []) : []
+          const merged = [...recent, ...idsThisSession].slice(-RECENT_BLACKLIST_SIZE)
+          localStorage.setItem(RECENT_BLACKLIST_KEY, JSON.stringify(merged))
+        }
+      } catch (_) {}
       setPhase('summary')
     } else {
       setSessionLiveTranscript('')
@@ -229,37 +273,50 @@ export default function App() {
             </motion.div>
           </motion.div>
         )}
-        {phase === 'scenarios' && bufferCountdown != null && (
+        {phase === 'scenarios' && (
           <motion.div
-            key="buffer"
-            initial={{ opacity: 0 }}
+            key="scenarios"
+            initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="w-full max-w-2xl rounded-2xl bg-white border border-slate-200 shadow-xl shadow-slate-200/50 p-8 md:p-12 flex flex-col items-center justify-center"
+            className="w-full flex flex-col items-center"
           >
-            <p className="text-slate-600 text-sm md:text-base mb-4">{initialBufferRef.current ? 'First question in' : 'Next question in'}</p>
-            <p className="text-4xl md:text-5xl font-semibold tabular-nums text-[#003063]" aria-live="polite">
-              {bufferCountdown}
-            </p>
+            {bufferCountdown != null ? (
+              <div className="w-full max-w-2xl rounded-2xl bg-white border border-slate-200 shadow-xl shadow-slate-200/50 p-8 md:p-12 flex flex-col items-center justify-center mx-auto">
+                <p className="text-slate-600 text-sm md:text-base mb-4">{initialBufferRef.current ? 'First question in' : 'Next question in'}</p>
+                <p className="text-4xl md:text-5xl font-semibold tabular-nums text-[#003063]" aria-live="polite">
+                  {bufferCountdown}
+                </p>
+              </div>
+            ) : currentScenario ? (
+              <ScenarioCard
+                key={`${currentScenario.id}-${currentQuestionIndex}`}
+                scenario={currentScenario}
+                index={currentQuestionIndex}
+                total={sessionScenarios.length}
+                timerSeconds={sessionTimerSeconds}
+                responseMode={sessionResponseMode}
+                initialResponse={previousResponse}
+                liveTranscript={sessionResponseMode === 'voice' ? sessionLiveTranscript : undefined}
+                setLiveTranscript={sessionResponseMode === 'voice' ? setSessionLiveTranscript : undefined}
+                onExit={handleExitClick}
+                onSubmit={(response) => {
+                  handleScenarioSubmit(currentScenario.id, currentScenario.query, response, currentQuestionIndex)
+                }}
+              />
+            ) : (
+              <div className="w-full max-w-2xl rounded-2xl bg-white border border-slate-200 shadow-xl p-8 text-center mx-auto">
+                <p className="text-slate-600 mb-4">{sessionScenarios.length === 0 ? 'No scenarios match your filters.' : 'Something went wrong loading the question.'}</p>
+                <button
+                  type="button"
+                  onClick={() => setPhase('start')}
+                  className="py-2.5 px-4 rounded-lg bg-[#003063] text-white text-sm font-medium"
+                >
+                  Back to start
+                </button>
+              </div>
+            )}
           </motion.div>
-        )}
-        {phase === 'scenarios' && bufferCountdown == null && currentScenario && (
-          <ScenarioCard
-            key={`${currentScenario.id}-${currentQuestionIndex}`}
-            scenario={currentScenario}
-            index={currentQuestionIndex}
-            total={sessionScenarios.length}
-            timerSeconds={sessionTimerSeconds}
-            responseMode={sessionResponseMode}
-            initialResponse={previousResponse}
-            liveTranscript={sessionResponseMode === 'voice' ? sessionLiveTranscript : undefined}
-            setLiveTranscript={sessionResponseMode === 'voice' ? setSessionLiveTranscript : undefined}
-            onExit={handleExitClick}
-            onSubmit={(response) => {
-              handleScenarioSubmit(currentScenario.id, currentScenario.query, response, currentQuestionIndex)
-            }}
-          />
         )}
         {phase === 'summary' && (
           <SessionSummary

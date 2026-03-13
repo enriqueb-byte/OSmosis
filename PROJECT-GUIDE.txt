@@ -8,10 +8,10 @@ QUICK REFERENCE — Key files
   Scenarios (add/edit/remove practice Q&As)   →  src/data/scenarios.json
   Prompt used to generate scenarios (Gemini)  →  src/data/scenario-generation-prompt.md
   Filter options (topic, difficulty, etc.)  →  src/data/scenarioFilters.js
-  Scorecard instructions for Gemini           →  src/data/gemini-preamble.md
+  Scorecard instructions for CallGymGPT       →  src/data/CallGymGPT-preamble.md
   In the app, Settings (gear) → "Under the hood" explains and points to the
   scenario prompt and scoring preamble files (scenario-generation-prompt.md,
-  gemini-preamble.md).
+  CallGymGPT-preamble.md).
   Assessment mode (fixed questions, time, filters)  →  src/data/testConfig.js
   Rules for Cursor when editing code          →  .cursorrules
   Session length (Practice mode defaults)     →  src/App.jsx
@@ -23,7 +23,7 @@ Call Gym is a practice drill for people who support or sell Jobber (field servic
 software). A user runs a short session: they see 10 random scenario questions
 (customer-style queries), answer each in bullet points under a time limit, then
 get a summary. They can copy a "transcript" (questions + their answers) and
-paste it into Gemini to get a scorecard and feedback. No login, no backend—
+paste it into CallGymGPT (ChatGPT) to get a scorecard and feedback. No login, no backend—
 everything runs in the browser.
 
 
@@ -64,7 +64,7 @@ How to RESTART the dev server
   • Open the new URL it prints (e.g. http://localhost:5173 or 5174) in your
     browser. Bookmark that URL for quick access.
 
-How to check that the transcript includes the preamble (instructions for Gemini)
+How to check that the transcript includes the preamble (instructions for CallGymGPT)
   1. Start the app: in terminal run "npm run dev", then open the URL in your
      browser.
   2. Do a practice session: click "Start session", answer a scenario or two (you
@@ -75,10 +75,10 @@ How to check that the transcript includes the preamble (instructions for Gemini)
   5. At the top you should see:
        # Call Gym Session Transcript
 
-       ## Instructions for the scorer (e.g. Gemini)
+       ## Instructions for the scorer (e.g. CallGymGPT)
 
        You are scoring a Call Gym practice session...
-       (the full text from gemini-preamble.md)
+       (the full text from CallGymGPT-preamble.md)
 
        ---
 
@@ -87,7 +87,7 @@ How to check that the transcript includes the preamble (instructions for Gemini)
        ## Scenario Q&As (score these)
        ...
      If you see that, the preamble is included. You can then paste the same
-     text into Gemini to get a scorecard.
+     text into CallGymGPT (ChatGPT) to get a scorecard.
 
 To build the app for deployment (e.g. GitHub Pages):
    npm run build
@@ -120,7 +120,7 @@ FOLDER AND FILE ORGANIZATION
   ScenarioCard.jsx   One scenario: shows the query, timer, and text area for
                       the user's response; handles submit and next.
   SessionSummary.jsx  End screen: lists scenarios answered, "Copy transcript"
-                      button. The transcript includes instructions for Gemini
+                      button. The transcript includes instructions for CallGymGPT
                       so the user can paste once and get a scorecard.
 
   src/data/
@@ -129,9 +129,10 @@ FOLDER AND FILE ORGANIZATION
   scenarioFilters.js  Defines filter criteria and options (Topics,
                       Difficulty, Customer type). Edit to add/rename
                       options; scenarios must use the same values.
-  gemini-preamble.md  The instructions that get pasted into the transcript for
-                      Gemini. Edit this to change how Gemini scores and what
-                      kind of scorecard the user gets (tone, format, criteria).
+  CallGymGPT-preamble.md  The instructions that get pasted into the transcript for
+                          CallGymGPT. Edit this to change how CallGymGPT scores
+                          and what kind of scorecard the user gets (tone, format,
+                          criteria).
 
 
 TWO FILES PEOPLE OFTEN CONFUSE
@@ -141,12 +142,13 @@ TWO FILES PEOPLE OFTEN CONFUSE
                            you want to change coding style or project rules
                            for anyone using Cursor here.
 
-  src/data/gemini-preamble.md  →  For Gemini (the AI that scores the session).
-                           This text is included in the copied transcript so
-                           when the user pastes into Gemini, Gemini knows the
-                           context (Jobber, Call Gym) and how to reply (e.g.
-                           scorecard format). Edit this to shape the final
-                           scorecard output—wording, criteria, structure.
+  src/data/CallGymGPT-preamble.md  →  For CallGymGPT (the ChatGPT that scores the
+                               session). This text is included in the copied
+                               transcript so when the user pastes into
+                               CallGymGPT, it knows the context (Jobber, Call
+                               Gym) and how to reply (e.g. scorecard format).
+                               Edit this to shape the final scorecard
+                               output—wording, criteria, structure.
 
 
 PRACTICE VS ASSESSMENT MODE
@@ -161,7 +163,7 @@ PRACTICE VS ASSESSMENT MODE
 
   The "How it works" section at the bottom of the start screen explains
   where scenarios come from, how the transcript and preamble work, how
-  scoring is done (in Gemini, not in the app), and who built it. Edit the
+  scoring is done (in CallGymGPT/ChatGPT, not in the app), and who built it. Edit the
   text in StartScreen.jsx inside the CollapsibleSection "How it works" if
   you want to change that copy (e.g. "Built by you" → your name).
 
@@ -169,7 +171,7 @@ PRACTICE VS ASSESSMENT MODE
 BASIC CHANGES YOU MIGHT WANT TO MAKE
 ------------------------------------
   • Add or edit practice scenarios    →  Edit src/data/scenarios.json
-  • Change how the scorecard looks    →  Edit src/data/gemini-preamble.md
+  • Change how the scorecard looks    →  Edit src/data/CallGymGPT-preamble.md
   • Change Assessment mode defaults   →  Edit src/data/testConfig.js
   • Change number of scenarios (e.g. 5) or timer (e.g. 90 sec) for Practice
     →  Edit src/App.jsx (defaults used when no options passed)
