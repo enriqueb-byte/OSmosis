@@ -418,10 +418,10 @@ export default function StartScreen({ maxQuestions = 50, onStart }) {
           />
         </div>
         <h1 className="font-sans text-2xl md:text-3xl font-semibold text-slate-800 text-center mb-1">
-          Call Gym
+          Jobber Call Gym
         </h1>
         <p className="text-slate-600 text-sm md:text-base mb-5 text-center">
-          Put in reps. Fail-forward. Crush your KO.
+          Put in reps. Fail-forward. Crush your calls!
         </p>
 
         <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 mb-5 text-left space-y-4">
